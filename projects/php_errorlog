@@ -1,0 +1,1 @@
+[31-Oct-2018 00:12:34 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/projects/index.php on line 3

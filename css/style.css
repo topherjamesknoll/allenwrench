@@ -1,0 +1,20 @@
+@import url('uikit.min.css');
+@import url('fontawesome.min.css');
+
+/* Custom */
+
+.title {
+  color: #FFFFFF;
+}
+
+/* UI Kit */
+
+.uk-container {
+  padding-top: 80px;
+}
+
+/* Navbar */
+
+.uk-navbar-container {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}

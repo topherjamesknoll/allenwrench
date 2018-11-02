@@ -1,0 +1,7 @@
+[31-Oct-2018 00:29:43 CST6CDT] PHP Parse error:  syntax error, unexpected ':' in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/login.php on line 5
+[31-Oct-2018 00:32:17 CST6CDT] PHP Parse error:  syntax error, unexpected ',' in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/login.php on line 6
+[31-Oct-2018 00:45:21 CST6CDT] PHP Parse error:  syntax error, unexpected '==' (T_IS_EQUAL) in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/login.php on line 14
+[31-Oct-2018 00:48:20 CST6CDT] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/login.php on line 7
+[31-Oct-2018 20:07:28 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/login.php on line 1
+[31-Oct-2018 20:15:08 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/add.php on line 1
+[31-Oct-2018 22:09:24 CST6CDT] PHP Parse error:  syntax error, unexpected '=', expecting ',' or ')' in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/edit.php on line 39

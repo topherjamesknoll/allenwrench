@@ -1,0 +1,7 @@
+[29-Oct-2018 15:36:45 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/index.php on line 1
+[29-Oct-2018 15:37:32 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'template-parts/header.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/index.php on line 11
+[29-Oct-2018 16:40:37 CST6CDT] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/add.php on line 8
+[29-Oct-2018 16:49:50 CST6CDT] PHP Parse error:  syntax error, unexpected '{' in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/delete.php on line 5
+[29-Oct-2018 20:04:52 CST6CDT] PHP Parse error:  syntax error, unexpected '{' in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/edit.php on line 5
+[29-Oct-2018 20:05:02 CST6CDT] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/edit.php on line 27
+[30-Oct-2018 18:14:38 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/index.php on line 1
