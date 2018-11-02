@@ -35,7 +35,7 @@ $result = mysqli_query($connection, $sql);
     <h1>Teams</h1>
   </div>
   <div class="uk-width-expand uk-text-right">
-    <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-primary">Add Teams</a>
+    <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-primary">Add Team</a>
   </div>
 </div>
 <div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid>
