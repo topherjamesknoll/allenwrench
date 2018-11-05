@@ -1,0 +1,38 @@
+[04-Nov-2018 00:26:49 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 29
+[04-Nov-2018 00:27:01 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 28
+[04-Nov-2018 00:29:37 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 27
+[04-Nov-2018 00:29:57 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 27
+[04-Nov-2018 00:30:24 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 27
+[04-Nov-2018 00:30:40 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 27
+[04-Nov-2018 00:30:50 CST6CDT] PHP Fatal error:  Uncaught Error: Cannot use object of type mysqli_result as array in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 27
+[04-Nov-2018 12:35:57 CST6CDT] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 66
+[04-Nov-2018 12:50:19 CST6CDT] PHP Parse error:  syntax error, unexpected ':' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 66
+[04-Nov-2018 12:52:24 CST6CDT] PHP Parse error:  syntax error, unexpected ')' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 66
+[04-Nov-2018 12:56:18 CST6CDT] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting ':' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 66
+[04-Nov-2018 13:09:02 CST6CDT] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 17
+[04-Nov-2018 15:04:56 CST6CDT] PHP Parse error:  syntax error, unexpected ')' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/delete.php on line 6
+[04-Nov-2018 15:05:07 CST6CDT] PHP Parse error:  syntax error, unexpected ''/tasks/index.php);' (T_ENCAPSED_AND_WHITESPACE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/delete.php on line 15
+[04-Nov-2018 15:17:02 CST6CDT] PHP Parse error:  syntax error, unexpected '{' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/edit.php on line 11
+[04-Nov-2018 19:16:09 CST6CDT] PHP Parse error:  syntax error, unexpected ':' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 68
+[04-Nov-2018 19:16:17 CST6CDT] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/cultureh/public_html/getallenwrench/development/allenwrench/tasks/index.php on line 68

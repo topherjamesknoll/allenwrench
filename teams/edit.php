@@ -31,17 +31,17 @@ else {
 
 <?php require_once '../template-parts/header.php'; ?>
 
-<h1>Edit Team</h1>
+<h1>Update Team</h1>
 <div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid>
     <div>
       <div class="uk-card uk-card-default uk-card-small uk-card-body">
         <form action="edit.php" method="get">
           <input type="hidden" name="teamid" value="<?php echo $row['id']; ?>">
           <h2 class="uk-card-title">Team Name:</h2>
-          <input type="text" name="name" class="uk-input" value="<?php echo $row['name']; ?>">
+          <input type="text" name="name" class="uk-input" value="<?php echo $row['name']; ?>" id="required">
           <h2 class="uk-card-title">Description:</h2>
           <textarea rows="8" class="uk-textarea" name="description"><?php echo $row['description']; ?></textarea>
-          <p><input type="submit" value="Edit Team" class="uk-button uk-button-primary"></p>
+          <p><input type="submit" value="Update Team" class="uk-button uk-button-primary submit"></p>
         </form>
       </div>
     </div>

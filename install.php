@@ -40,7 +40,23 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       id INT(11) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
+      goal INT(11) NOT NULL,
+      budget INT(11) NOT NULL,
       team INT(11) NOT NULL,
+      PRIMARY KEY (`id`)
+    )
+  ";
+  mysqli_query($connection, $sql);
+
+  $sql = "CREATE TABLE `tasks` (
+      id INT(11) NOT NULL AUTO_INCREMENT,
+      name VARCHAR(255) NOT NULL,
+      description TEXT NOT NULL,
+      project INT(11) NOT NULL,
+      progress INT(11) NOT NULL,
+      budget INT(11) NOT NULL,
+      goal INT(11) NOT NULL,
+      due DATE NOT NULL,
       PRIMARY KEY (`id`)
     )
   ";
@@ -112,6 +128,13 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
     $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'We are going to clean up the visitor services department to better server our visitors.', '1');";
     $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'We are going to clean up the visitor services department to better server our visitors.', '1');";
     $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'We are going to clean up the visitor services department to better server our visitors.', '2');";
+
+    // Create dummy projects
+
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Scrub the toilets', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '14000', '20000');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Scrub the shower', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '2', '12000', '30000');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Clean the sink', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '3', '10000', '4000');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Take out the trash', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '4', '1000', '700');";
 
     // Create dummy comments
 

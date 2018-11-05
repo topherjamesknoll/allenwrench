@@ -40,7 +40,7 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
 <div uk-grid>
   <div class="uk-width-1-4@m"></div>
   <div class="uk-width-1-2@m uk-padding">
-    <h1 class="uk-text-center"><i class="far fa-project-diagram"></i> Allen Wrench</h1>
+    <h1 class="uk-text-center title"><i class="far fa-project-diagram"></i> Allen Wrench</h1>
   </div>
 </div>
 <div uk-grid>

@@ -24,18 +24,11 @@ $projects = mysqli_query($connection, $sql);
 
 <?php require_once '../template-parts/header.php'; ?>
 
-<?php if (mysqli_num_rows($projects)==0) : ?>
-  <div uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <h3>It's quiet in here.</h3>
-    <p>There doesn't seem to be anything here. Try adding a team. Or, after you&apos;ve selected a team, add a project.</p>
-  </div>
-<?php endif; ?>
 <div uk-grid>
   <div>
     <?php if (mysqli_num_rows($teams)!=0) : ?>
       <p class="uk-text-bold"><?php echo mysqli_num_rows($projects); ?> Projects for</p>
-      <h1><?php echo $team['name']; ?></h1>
+      <h1><?php if ($team['name']!='') : echo $team['name']; else : ?>Untitled<?php endif; ?></h1>
       <p><?php echo $team['description']; ?></p>
     <?php endif; ?>
   </div>
@@ -49,30 +42,57 @@ $projects = mysqli_query($connection, $sql);
 <div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid>
   <?php while ($project = mysqli_fetch_assoc($projects)) : ?>
     <div>
-      <div class="uk-card uk-card-default uk-card-small uk-card-hover">
-        <div class="uk-card-header">
-          <p class="uk-text-right">
-            <a href="<?php echo ABSPATH; ?>/projects/edit.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-wrench"></i></a>
-            <a href="<?php echo ABSPATH; ?>/projects/delete.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-trash-alt"></i></a>
-          </p>
-          <h3 class="uk-card-title"><a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/comments/index.php"><?php echo $project['name']; ?></a></h3>
-        </div>
-        <div class="uk-card-body">
-          <p><?php echo $project['description']; ?></p>
-        </div>
-        <div class="uk-card-footer">
-          <p>
-            <?php
-              // Get number of comments
+      <div class="uk-card uk-card-default uk-card-body uk-card-hover uk-card-small">
+        <p class="uk-text-right">
+          <a href="<?php echo ABSPATH; ?>/projects/edit.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-wrench"></i></a>
+          <a href="<?php echo ABSPATH; ?>/projects/delete.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-trash-alt"></i></a>
+        </p>
+        <h2 class="uk-card-title">
+          <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/tasks/index.php">
+            <?php if ($project['name']!='') : echo $project['name']; else : ?>Untitled<?php endif; ?>
+          </a>
+        </h2>
 
-              $project_id = $project['id'];
-              $sql = "SELECT * FROM `comments` WHERE `comments`.`project` = '$project_id'";
-              $comments = mysqli_query ($connection, $sql);
+        <p><?php echo $project['description']; ?></p>
 
-            ?>
-            <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/comments/index.php"><?php echo mysqli_num_rows($comments); ?> <i class="far fa-comment"></i></a>
-          </p>
-        </div>
+        <p>
+          <?php
+            // Get number of tasks
+
+            $project_id = $project['id'];
+            $sql = "SELECT * FROM `tasks` WHERE `tasks`.`project` = '$project_id'";
+            $tasks = mysqli_query ($connection, $sql);
+
+          ?>
+          <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/tasks/index.php"><?php echo mysqli_num_rows($tasks); ?> <i class="far fa-check-double"></i></a>
+          <?php
+            // Get number of comments
+
+            $sql = "SELECT * FROM `comments` WHERE `comments`.`project` = '$project_id'";
+            $comments = mysqli_query ($connection, $sql);
+
+          ?>
+          <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/comments/index.php"><?php echo mysqli_num_rows($comments); ?> <i class="far fa-comment"></i></a>
+        </p>
+        <?php
+          // Get total budget
+
+          $sql = "SELECT SUM(`budget`) AS `value_sum` FROM `tasks` WHERE `tasks`.`project` = '$project_id'";
+          $budgets = mysqli_query($connection, $sql);
+          $budget = mysqli_fetch_assoc($budgets);
+          echo 'Budgets $' . number_format($budget['value_sum']);
+
+        ?>
+        <br>
+        <?php
+          // Get total budget
+
+          $sql = "SELECT SUM(`goal`) AS `value_sum` FROM `tasks` WHERE `tasks`.`project` = '$project_id'";
+          $goals = mysqli_query($connection, $sql);
+          $goal = mysqli_fetch_assoc($goals);
+          echo 'Goals $' . number_format($goal['value_sum']);
+
+        ?>
       </div>
     </div>
   <?php endwhile; ?>

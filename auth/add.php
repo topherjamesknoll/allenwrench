@@ -61,14 +61,14 @@ if (isset($_POST['email']) && isset($_POST['first']) && isset($_POST['last'])) {
   <div class="uk-width-1-2@m">
     <div class="uk-card uk-card-default uk-card-body">
       <form action="add.php" method="post">
-      <h2>Add a Member</h2>
+      <h2>Invite a Member</h2>
         <p>Email Address:</p>
-        <input type="text" name="email" class="uk-input">
+        <input type="text" name="email" class="uk-input" id="required">
         <p>First Name:</p>
         <input type="text" name="first" class="uk-input">
         <p>Last Name:</p>
         <input type="text" name="last" class="uk-input">
-        <p><input type="submit" value="Add" class="uk-button uk-button-primary"></p>
+        <p><input type="submit" value="Add" class="uk-button uk-button-primary submit"></p>
       </form>
     </div>
   </div>

@@ -20,10 +20,40 @@ if (isset($_POST['comment'])) {
 
   $subject = $_POST['subject'];
   $comment = $_POST['comment'];
-  $comment = $_POST['comment'];
+  $email = $_POST['email'];
 
   $sql = "INSERT INTO `comments` (`subject`, `comment`, `project`, `author`) VALUES ('$subject', '$comment', '$project_id', '$author')";
   mysqli_query($connection, $sql);
+
+  // Send confirmation link
+
+  if ($email=='true') {
+
+    // Get Sender
+
+    $sql = "SELECT `email`, `user`, `first`, `last` FROM `members` WHERE `members`.`id` = '$author'";
+    $users = mysqli_query($connection, $sql);
+    $user = mysqli_fetch_assoc($users);
+
+    // Get email addresses
+
+    $sql = "SELECT `email` FROM `members`";
+    $emailaddresses = mysqli_query($connection, $sql);
+
+    while($emailaddress = mysqli_fetch_assoc($emailaddresses)) {
+      $message = '
+        <html>
+        <body>
+        ' . $comment . '
+        </body>
+        </html>
+      ';
+      $headers[] = 'MIME-Version: 1.0';
+      $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+      $headers[] = 'From: ' . $user['user'] . ' <' . $user['email'] . '>';
+      mail($emailaddress['email'], 'New comment on Allen Wrench', $message, implode("\r\n", $headers));
+    }
+  }
 
 }
 
@@ -45,53 +75,46 @@ mysqli_close($connection);
   <p>You must first select a project to see comments on it.</p>
 </div>
 <?php else : ?>
-  <?php if (mysqli_num_rows($comments)==0) : ?>
-    <div uk-alert>
-      <a class="uk-alert-close" uk-close></a>
-      <h3>It's quiet in here.</h3>
-      <p>There doesn't seem to be any comments here. Speak your mind and use the form below to share yours.</p>
-    </div>
-  <?php endif; ?>
   <div uk-grid>
     <div>
       <p class="uk-text-bold"><?php echo mysqli_num_rows($comments); ?> Comments for</p>
-      <h1><?php echo $project['name']; ?></h1>
+      <h1><?php if ($project['name']!='') : echo $project['name']; else : ?>Untitled<?php endif; ?></h1>
       <p><?php echo $project['description']; ?></p>
     </div>
     <div class="uk-width-expand uk-text-right">
-      <a href="#commentform" class="uk-button uk-button-primary">Add Comment</a>
+      <a href="#jqueryform" class="uk-button uk-button-primary">Add Comment</a>
     </div>
   </div>
   <div class="uk-child-width-1-1" uk-grid>
     <?php while($comment = mysqli_fetch_assoc($comments)) : ?>
       <div>
-        <div class="uk-card uk-card-default uk-card-small">
-          <div class="uk-card-header">
-            <div uk-grid>
-              <div class="uk-width-auto">
-                <?php avatar($comment['author'],38); ?>
-              </div>
-              <div class="uk-width-expand">
-                <h3 class="uk-card-title"><?php echo $comment['subject']; ?></h3>
-                <p class="uk-text-small uk-text-muted"><?php user($comment['author']); ?> on <?php echo date('M j g:i A', $comment['time']); ?></p>
-              </div>
+        <div class="uk-card uk-card-default uk-card-body uk-card-small">
+          <div uk-grid>
+            <div class="uk-width-auto">
+              <?php avatar($comment['author'],38); ?>
+            </div>
+            <div class="uk-width-expand">
+              <h3 class="uk-card-title uk-margin-remove"><?php echo $comment['subject']; ?></h3>
+              <p class="uk-text-small uk-text-muted uk-margin-remove"><?php user($comment['author']); ?> on <?php echo date('M j g:i A', $comment['time']); ?></p>
             </div>
           </div>
-          <div class="uk-card-body">
-            <p><?php echo $comment['comment']; ?></p>
-          </div>
+          <p><?php echo $comment['comment']; ?></p>
         </div>
       </div>
     <?php endwhile; ?>
     <div>
       <div class="uk-card uk-card-default uk-card-small uk-card-body">
-        <form action="index.php" method="post" id="commentform">
+        <form action="index.php" method="post" id="jqueryform">
           <p>Subject:</p>
           <p><input type="text" name="subject" class="uk-input"></p>
           <p>Message:</p>
-          <textarea rows="8" class="uk-textarea" name="comment"></textarea>
-          <p><span class="uk-button uk-button-primary" id="commentformsubmit">Send <i class="far fa-paper-plane"></i></span></p>
+          <textarea rows="8" class="uk-textarea" name="comment" id="comment"></textarea>
+          <p><span class="uk-button uk-button-primary" id="jqueryformsubmit">Leave Comment</span></p>
+          <p><input type="checkbox" class="uk-checkbox" name="email" value="true" checked> Email team this comment</p>
         </form>
+        <script>
+            CKEDITOR.replace( 'comment' );
+        </script>
       </div>
     </div>
   </div>

@@ -3,29 +3,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo ABSPATH; ?>/css/style.css">
+  <script src="<?php echo ABSPATH; ?>/js/ckeditor/ckeditor.js"></script>
+  <script src="<?php echo ABSPATH; ?>/js/pikaday.js"></script>
 </head>
 <body>
 
-<nav class="uk-navbar-container" uk-navbar uk-sticky>
+<nav class="uk-navbar-container uk-light" uk-navbar uk-sticky>
   <div class="uk-navbar-left">
-    <a class="uk-navbar-item uk-logo" href="<?php echo ABSPATH; ?>"><span class="uk-visible@s"><i class="far fa-project-diagram"></i></span>&nbsp;AW</a>
-    <ul class="uk-navbar-nav">
-      <li><a href="<?php echo ABSPATH; ?>/index.php"><span class="uk-hidden@s"><i class="far fa-users"></i></span><span class="uk-visible@s">&nbsp;Teams</span></a></li>
-      <li><a href="<?php echo ABSPATH; ?>/projects/index.php"><span class="uk-hidden@s"><i class="far fa-project-diagram"></i></span><span class="uk-visible@s">&nbsp;Projects</a></span></li>
-      <li><a href="<?php echo ABSPATH; ?>/comments/index.php"><span class="uk-hidden@s"><i class="far fa-comment"></i></span><span class="uk-visible@s">&nbsp;Comments</a></span></li>
-      <li><a href="mailto:topher@getallenwrench.com"><span class="uk-hidden@s"><i class="far fa-life-ring"></i></span><span class="uk-visible@s">&nbsp;Support</a></span></li>
-    </ul>
+      <a class="uk-navbar-toggle" uk-toggle="target: #offcanvas-nav">
+          <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
+      </a>
   </div>
-  <div class="uk-navbar-right">
+  <div class="uk-navbar-center">
     <ul class="uk-navbar-nav">
-      <li><a href="<?php echo ABSPATH; ?>/members/index.php">Members</a></li>
       <li>
         <a href="#"><?php avatar($_SESSION['user'],38); ?></a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li class="uk-active"><a href="<?php echo ABSPATH; ?>/auth/add.php">Invite Members</a></li>
+            <li><a href="<?php echo ABSPATH; ?>/auth/add.php">Invite Members</a></li>
             <li><a href="<?php echo ABSPATH; ?>/auth/edit.php">Edit Profile</a></li>
             <li><a href="<?php echo ABSPATH; ?>/auth/logout.php">Logout</a></li>
+            <li><a href="<?php echo ABSPATH; ?>/members/index.php">Members</a></li>
           </ul>
         </div>
       </li>
@@ -33,4 +31,18 @@
   </div>
 </nav>
 
-<div class="uk-container">
+<div id="offcanvas-nav" uk-offcanvas="overlay: true">
+  <div class="uk-offcanvas-bar">
+    <h2><i class="far fa-project-diagram"></i> Allen Wrench</h2>
+    <ul class="uk-nav uk-nav-default">
+    <li><a href="<?php echo ABSPATH; ?>/index.php">Teams</a></li>
+    <li><a href="<?php echo ABSPATH; ?>/projects/index.php">Projects</a></li>
+    <li><a href="<?php echo ABSPATH; ?>/tasks/index.php">Tasks</a></li>
+    <li><a href="<?php echo ABSPATH; ?>/comments/index.php">Comments</a></li>
+    <li class="uk-nav-divider"></li>
+    <li><a href="mailto:topher@getallenwrench.com">Email Support</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="uk-container uk-container-expand uk-padding">

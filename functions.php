@@ -33,6 +33,36 @@ function avatar($user, $size) {
   }
 }
 
+function progress_class($progress) {
+  if ($progress==1) {
+    echo 'uk-alert-success';
+  }
+  elseif ($progress==2) {
+    echo 'uk-alert-warning';
+  }
+  elseif ($progress==3) {
+    echo 'uk-alert-danger';
+  }
+  else {
+    return;
+  }
+}
+
+function progress($progress) {
+  if ($progress==1) {
+    echo ' | Completed';
+  }
+  elseif ($progress==2) {
+    echo ' | In-progress';
+  }
+  elseif ($progress==3) {
+    echo ' | On hold';
+  }
+  else {
+    return;
+  }
+}
+
 function user($user) {
 
   // Get user name

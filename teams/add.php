@@ -27,10 +27,10 @@ if (isset($_POST['name']) && isset($_POST['description'])) {
       <div class="uk-card uk-card-default uk-card-small uk-card-body">
         <form action="add.php" method="post">
           <h2 class="uk-card-title">Team Name:</h2>
-          <input type="text" name="name" class="uk-input">
+          <input type="text" name="name" class="uk-input" id="required">
           <h2 class="uk-card-title">Description:</h2>
           <textarea rows="8" class="uk-textarea" name="description"></textarea>
-          <p><input type="submit" value="Add Team" class="uk-button uk-button-primary"></p>
+          <p><input type="submit" value="Add Team" class="uk-button uk-button-primary submit"></p>
         </form>
       </div>
     </div>

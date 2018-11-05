@@ -7,8 +7,8 @@ $("#installnextbutton").click(function(){
 
 // Submit comment form
 
-$( "#commentformsubmit" ).click(function() {
-  $('form#commentform').submit();
+$( "#jqueryformsubmit" ).click(function() {
+  $('form#jqueryform').submit();
 });
 
 

@@ -1,5 +1,6 @@
 @import url('uikit.min.css');
 @import url('fontawesome.min.css');
+@import url('pikaday.css');
 
 /* Custom */
 
@@ -9,12 +10,33 @@
 
 /* UI Kit */
 
-.uk-container {
-  padding-top: 80px;
+em {
+  color: #666666;
 }
 
-/* Navbar */
+/* Links */
 
+a {
+  color: #00BFFF;
+}
+
+/* Top Nav */
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+  background: #00BFFF;
+}
 .uk-navbar-container {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Side Nav */
+
+.uk-nav-default {
+  box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Buttons */
+
+.uk-button-primary {
+  background: #00BFFF;
 }

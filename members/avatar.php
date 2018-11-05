@@ -9,9 +9,10 @@ if (isset($_FILES['file'])) {
   $file = basename($_FILES['file']['name']);
   $newfile = '../uploads/avatars/' . $user . '.jpg';
   move_uploaded_file($_FILES['file']['tmp_name'], $newfile);
-}
 
-create_square_image('../uploads/avatars/' . $user . '.jpg','../uploads/avatars/' . $user . '.jpg',200);
+  create_square_image('../uploads/avatars/' . $user . '.jpg','../uploads/avatars/' . $user . '.jpg',200);
+
+}
 
 ?>
 

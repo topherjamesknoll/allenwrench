@@ -34,10 +34,10 @@ if (isset($_GET['teamid'])) {
         <form action="add.php" method="get">
           <input type="hidden" name="teamid" value="<?php echo $team_id; ?>">
           <h2 class="uk-card-title">Project Name:</h2>
-          <input type="text" name="name" class="uk-input">
+          <input type="text" name="name" class="uk-input" id="required">
           <h2 class="uk-card-title">Description:</h2>
           <textarea rows="8" class="uk-textarea" name="description"></textarea>
-          <p><input type="submit" value="Add Project" class="uk-button uk-button-primary"></p>
+          <p><input type="submit" value="Add Project" class="uk-button uk-button-primary submit"></p>
         </form>
       </div>
     </div>
