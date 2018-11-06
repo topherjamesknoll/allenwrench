@@ -14,6 +14,7 @@ connect();
 if (isset($_POST['task']) || isset($_POST['start']) || isset($_POST['due']) || isset($_POST['progress']) || isset($_POST['priority']) || isset($_POST['budget']) || isset($_POST['goal']) || isset($_POST['description'])) {
   $task = $_POST['task'];
   $start = $_POST['start'];
+  $start = date('Y-m-d', strtotime(str_replace('-', '/', $start)));
   $due = $_POST['due'];
   $due = date('Y-m-d', strtotime(str_replace('-', '/', $due)));
   $progress = $_POST['progress'];
@@ -21,10 +22,9 @@ if (isset($_POST['task']) || isset($_POST['start']) || isset($_POST['due']) || i
   $budget = str_replace(',', '', $_POST['budget']);
   $goal = str_replace(',', '', $_POST['goal']);
   $description = $_POST['description'];
-
   // Insert data
 
-  $sql = "INSERT INTO `tasks` (`name`, `due`, `progress`, `priority`, `description`, `team`, `project`, `budget`, `goal`) VALUES ('$task', '$due', '$progress', '$priority', '$description', '$team_id', '$project_id', '$budget', '$goal')";
+  $sql = "INSERT INTO `tasks` (`name`, `start`, `due`, `progress`, `priority`, `description`, `team`, `project`, `budget`, `goal`) VALUES ('$task', '$start', '$due', '$progress', '$priority', '$description', '$team_id', '$project_id', '$budget', '$goal')";
   mysqli_query($connection, $sql);
 
 }
@@ -86,11 +86,11 @@ mysqli_close($connection)
         <div class="uk-child-width-1-2" uk-grid>
           <div>
             <p>Start Date:</p>
-            <p><input type="text" name="start" id="datepicker" class="uk-input"></p>
+            <p><input type="text" name="start" id="datepicker1" class="uk-input"></p>
           </div>
           <div>
             <p>Due Date:</p>
-            <p><input type="text" name="due" id="datepicker" class="uk-input"></p>
+            <p><input type="text" name="due" id="datepicker2" class="uk-input"></p>
           </div>
           <div>
             <p>Progress:</p>
@@ -120,11 +120,19 @@ mysqli_close($connection)
         <script>
           var picker = new Pikaday(
           {
-          field: document.getElementById('datepicker'),
-          firstDay: 1,
-          minDate: new Date(),
-          maxDate: new Date(2020, 12, 31),
-          yearRange: [2000,2020]
+            field: document.getElementById('datepicker1'),
+            firstDay: 1,
+            minDate: new Date(),
+            maxDate: new Date(2020, 12, 31),
+            yearRange: [2000,2020]
+          });
+          var picker = new Pikaday(
+          {
+            field: document.getElementById('datepicker2'),
+            firstDay: 1,
+            minDate: new Date(),
+            maxDate: new Date(2020, 12, 31),
+            yearRange: [2000,2020]
           });
         </script>
         <p>Description:</p>

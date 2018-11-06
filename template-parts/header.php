@@ -41,6 +41,7 @@
     <li><a href="<?php echo ABSPATH; ?>/projects/index.php">Projects</a></li>
     <li><a href="<?php echo ABSPATH; ?>/tasks/index.php">Tasks</a></li>
     <li><a href="<?php echo ABSPATH; ?>/comments/index.php">Discussions</a></li>
+    <li><a href="<?php echo ABSPATH; ?>/calendar.php">Calendar</a></li>
     <li class="uk-nav-divider"></li>
     <li><a href="mailto:topher@getallenwrench.com">Email Support</a></li>
     </ul>

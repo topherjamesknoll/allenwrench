@@ -6,6 +6,30 @@
 /_/    \_\_|_|\___|_| |_|     \/  \/ |_|  \___|_| |_|\___|_| |_|
 
 *********************************
+* In Allen Wrench Version 1.2.4 *
+*********************************
+
+*** New Features ***
+
+Calendar
+
+*** Bug Fixes ***
+
+Added Pikaday to due date in tasks
+
+*** Planned Features ***
+
+Assignment of team members
+Auto update
+Lost password feature
+Dashboard
+
+*** Planned Fixes ***
+
+Special characters in database
+Date sorting in tasks
+
+*********************************
 * In Allen Wrench Version 1.2.3 *
 *********************************
 

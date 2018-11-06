@@ -9,7 +9,7 @@ if (isset($_GET['id'])) { $id = $_GET['id']; }
 
 connect();
 
-if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['progress']) || isset($_GET['priority']) || isset($_GET['budget']) || isset($_GET['goal']) || isset($_GET['due'])) {
+if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['progress']) || isset($_GET['priority']) || isset($_GET['budget']) || isset($_GET['goal']) || isset($_GET['start']) || isset($_GET['due'])) {
 
   $task_name = $_GET['taskname'];
   $description = $_GET['description'];
@@ -17,12 +17,14 @@ if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['prog
   $priority = $_GET['priority'];
   $budget = str_replace('$','',str_replace(',', '', $_GET['budget']));
   $goal = str_replace('$','',str_replace(',', '', $_GET['goal']));
+  $start = $_GET['start'];
+  $start = date('Y-m-d', strtotime(str_replace('-', '/', $start)));
   $due = $_GET['due'];
   $due = date('Y-m-d', strtotime(str_replace('-', '/', $due)));
 
   //Update task in database
 
-  $sql = "UPDATE `tasks` SET `name` = '$task_name', `description` = '$description', `progress` = '$progress', `priority` = '$priority', `budget` = '$budget', `goal` = '$goal', `due` = '$due' WHERE `tasks`.`id` = '$id'";
+  $sql = "UPDATE `tasks` SET `name` = '$task_name', `description` = '$description', `progress` = '$progress', `priority` = '$priority', `budget` = '$budget', `goal` = '$goal', `start` = '$start', `due` = '$due' WHERE `tasks`.`id` = '$id'";
   mysqli_query($connection, $sql);
 
   header('Location: ' . ABSPATH . '/tasks/index.php');
@@ -50,11 +52,11 @@ $task = mysqli_fetch_assoc($tasks);
         <div class="uk-child-width-1-2" uk-grid>
           <div>
             <p>Start Date:</p>
-            <p><input type="text" name="start" id="datepicker" class="uk-input"></p>
+            <p><input type="text" name="start" id="datepicker1" class="uk-input"></p>
           </div>
           <div>
             <p>Due Date:</p>
-            <p><input type="text" name="due" id="datepicker" class="uk-input"></p>
+            <p><input type="text" name="due" id="datepicker2" class="uk-input"></p>
           </div>
           <div>
             <p>Progress:</p>
@@ -84,11 +86,19 @@ $task = mysqli_fetch_assoc($tasks);
         <script>
           var picker = new Pikaday(
           {
-          field: document.getElementById('datepicker'),
-          firstDay: 1,
-          minDate: new Date(),
-          maxDate: new Date(2020, 12, 31),
-          yearRange: [2000,2020]
+            field: document.getElementById('datepicker1'),
+            firstDay: 1,
+            minDate: new Date(),
+            maxDate: new Date(2020, 12, 31),
+            yearRange: [2000,2020]
+          });
+          var picker = new Pikaday(
+          {
+            field: document.getElementById('datepicker2'),
+            firstDay: 1,
+            minDate: new Date(),
+            maxDate: new Date(2020, 12, 31),
+            yearRange: [2000,2020]
           });
         </script>
         <p>Description:</p>
