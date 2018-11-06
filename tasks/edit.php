@@ -9,19 +9,20 @@ if (isset($_GET['id'])) { $id = $_GET['id']; }
 
 connect();
 
-if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['progress']) || isset($_GET['due'])) {
+if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['progress']) || isset($_GET['priority']) || isset($_GET['budget']) || isset($_GET['goal']) || isset($_GET['due'])) {
 
   $task_name = $_GET['taskname'];
   $description = $_GET['description'];
   $progress = $_GET['progress'];
-  $budget = str_replace(',', '', $_GET['budget']);
-  $goal = str_replace(',', '', $_GET['goal']);
+  $priority = $_GET['priority'];
+  $budget = str_replace('$','',str_replace(',', '', $_GET['budget']));
+  $goal = str_replace('$','',str_replace(',', '', $_GET['goal']));
   $due = $_GET['due'];
   $due = date('Y-m-d', strtotime(str_replace('-', '/', $due)));
 
   //Update task in database
 
-  $sql = "UPDATE `tasks` SET `name` = '$task_name', `description` = '$description', `progress` = '$progress', `due` = '$due' WHERE `tasks`.`id` = '$id'";
+  $sql = "UPDATE `tasks` SET `name` = '$task_name', `description` = '$description', `progress` = '$progress', `priority` = '$priority', `budget` = '$budget', `goal` = '$goal', `due` = '$due' WHERE `tasks`.`id` = '$id'";
   mysqli_query($connection, $sql);
 
   header('Location: ' . ABSPATH . '/tasks/index.php');
@@ -46,19 +47,40 @@ $task = mysqli_fetch_assoc($tasks);
         <input type="hidden" name="id" value="<?php echo $id; ?>"
         <p>Name:</p>
         <p><input type="text" name="taskname" class="uk-input" value="<?php echo $task['name']; ?>"></p>
-        <p>Due:</p>
-        <p><input type="text" name="due" id="datepicker" class="uk-input" value="<?php echo $task['due']; ?>"></p>
-        <p>Progress:</p>
-        <select name="progress" class="uk-select">
-          <option value="2" selected>In-progress</option>
-          <option value="3">On hold</option>
-          <option value="1">Completed</option>
-          <option>N/A</option>
-        </select>
-        <p>Budget:</p>
-        <p><input type="text" name="budget" class="uk-input" value="<?php echo $task['budget']; ?>"></p>
-        <p>Goal:</p>
-        <p><input type="text" name="goal" class="uk-input" value="<?php echo $task['goal']; ?>"></p>
+        <div class="uk-child-width-1-2" uk-grid>
+          <div>
+            <p>Start Date:</p>
+            <p><input type="text" name="start" id="datepicker" class="uk-input"></p>
+          </div>
+          <div>
+            <p>Due Date:</p>
+            <p><input type="text" name="due" id="datepicker" class="uk-input"></p>
+          </div>
+          <div>
+            <p>Progress:</p>
+            <select name="progress" class="uk-select">
+              <option value="2" selected>In-progress</option>
+              <option value="3">On hold</option>
+              <option value="1">Completed</option>
+            </select>
+          </div>
+          <div>
+            <p>Priority:</p>
+            <select name="priority" class="uk-select">
+              <option value="1" selected>None</option>
+              <option value="2">Medium</option>
+              <option value="3">High</option>
+            </select>
+          </div>
+          <div>
+            <p>Budget:</p>
+            <p><input type="text" name="budget" class="uk-input" value="<?php echo $task['budget']; ?>"></p>
+          </div>
+          <div>
+            <p>Goal:</p>
+            <p><input type="text" name="goal" class="uk-input" value="<?php echo $task['goal']; ?>"></p>
+          </div>
+        </div>
         <script>
           var picker = new Pikaday(
           {

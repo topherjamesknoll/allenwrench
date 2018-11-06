@@ -25,27 +25,29 @@ $projects = mysqli_query($connection, $sql);
 <?php require_once '../template-parts/header.php'; ?>
 
 <div uk-grid>
-  <div>
-    <?php if (mysqli_num_rows($teams)!=0) : ?>
-      <p class="uk-text-bold"><?php echo mysqli_num_rows($projects); ?> Projects for</p>
-      <h1><?php if ($team['name']!='') : echo $team['name']; else : ?>Untitled<?php endif; ?></h1>
-      <p><?php echo $team['description']; ?></p>
-    <?php endif; ?>
+  <div class="uk-width-expand@s">
+    <p class="uk-text-bold"><?php echo mysqli_num_rows($projects); ?> Projects for</p>
+    <h1><?php if ($team['name']!='') : echo $team['name']; else : ?>Untitled<?php endif; ?></h1>
+    <p><?php echo $team['description']; ?></p>
   </div>
-  <div class="uk-width-expand uk-text-right">
+  <div>
     <?php if (mysqli_num_rows($teams)!=0) : ?>
       <a href="<?php echo ABSPATH; ?>/projects/add.php?teamid=<?php echo $team['id']; ?>" class="uk-button uk-button-primary">Add Project</a>
     <?php endif; ?>
     <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-default">Add Team</a>
   </div>
 </div>
-<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid>
+<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-4@l" uk-grid>
   <?php while ($project = mysqli_fetch_assoc($projects)) : ?>
     <div>
       <div class="uk-card uk-card-default uk-card-body uk-card-hover uk-card-small">
         <p class="uk-text-right">
-          <a href="<?php echo ABSPATH; ?>/projects/edit.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-wrench"></i></a>
-          <a href="<?php echo ABSPATH; ?>/projects/delete.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-trash-alt"></i></a>
+          <span uk-tooltip="title: Edit Project">
+            <a href="<?php echo ABSPATH; ?>/projects/edit.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-wrench"></i></a>
+          </span>
+          <span uk-tooltip="title: Delete Project">
+            <a href="<?php echo ABSPATH; ?>/projects/delete.php?projectid=<?php echo $project['id']; ?>&teamid=<?php echo $team['id']; ?>"><i class="far fa-trash-alt"></i></a>
+          </span>
         </p>
         <h2 class="uk-card-title">
           <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/tasks/index.php">
@@ -64,7 +66,9 @@ $projects = mysqli_query($connection, $sql);
             $tasks = mysqli_query ($connection, $sql);
 
           ?>
-          <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/tasks/index.php"><?php echo mysqli_num_rows($tasks); ?> <i class="far fa-check-double"></i></a>
+          <span uk-tooltip="title: Tasks">
+            <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/tasks/index.php"><?php echo mysqli_num_rows($tasks); ?> <i class="far fa-check-double"></i></a>
+          </span>
           <?php
             // Get number of comments
 
@@ -72,7 +76,9 @@ $projects = mysqli_query($connection, $sql);
             $comments = mysqli_query ($connection, $sql);
 
           ?>
-          <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/comments/index.php"><?php echo mysqli_num_rows($comments); ?> <i class="far fa-comment"></i></a>
+          <span uk-tooltip="title: Discussions">
+            <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&project=<?php echo $project['id']; ?>&directory=/comments/index.php"><?php echo mysqli_num_rows($comments); ?> <i class="far fa-comment"></i></a>
+          </span>
         </p>
         <?php
           // Get total budget

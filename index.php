@@ -17,53 +17,68 @@ if (!file_exists('config.php')) {
 
 connect();
 $sql = "SELECT * FROM `teams`";
-$result = mysqli_query($connection, $sql);
+$teams = mysqli_query($connection, $sql);
 
 ?>
 
 <?php require_once 'template-parts/header.php'; ?>
 
-<?php if (mysqli_num_rows($result)==0) : ?>
-  <div uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <h3>It's quiet in here.</h3>
-    <p>There doesn't seem to be anything here. Try adding a team.</p>
-  </div>
-<?php endif; ?>
 <div uk-grid>
-  <div>
+  <div class="uk-width-expand">
     <h1>Teams</h1>
   </div>
-  <div class="uk-width-expand uk-text-right">
+  <div>
     <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-primary">Add Teams</a>
   </div>
 </div>
-<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid>
-  <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-4@l" uk-grid>
+  <?php while ($team = mysqli_fetch_assoc($teams)) : ?>
     <div>
-      <div class="uk-card uk-card-default uk-card-small uk-card-hover">
-        <div class="uk-card-header">
+      <div class="uk-card uk-card-default uk-card-body uk-card-small uk-card-hover">
           <p class="uk-text-right">
-            <a href="<?php echo ABSPATH; ?>/teams/edit.php?teamid=<?php echo $row['id']; ?>"><i class="far fa-wrench"></i></a>
-            <a href="<?php echo ABSPATH; ?>/teams/delete.php?teamid=<?php echo $row['id']; ?>"><i class="far fa-trash-alt"></i></a>
+            <span uk-tooltip="title: Edit Team">
+              <a href="<?php echo ABSPATH; ?>/teams/edit.php?teamid=<?php echo $team['id']; ?>"><i class="far fa-wrench"></i></a>
+            </span>
+            <span uk-tooltip="title: Delete Team">
+              <a href="<?php echo ABSPATH; ?>/teams/delete.php?teamid=<?php echo $team['id']; ?>"><i class="far fa-trash-alt"></i></a>
+            </span>
           </p>
-          <h2 class="uk-card-title"><a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $row['id']; ?>&project=&directory=/projects/index.php"><?php echo $row['name']; ?></a></h2>
-        </div>
-        <div class="uk-card-body">
-          <p><?php echo $row['description']; ?></p>
-        </div>
-        <div class="uk-card-footer">
-          <?php
-            // Get number of projects
+          <h2 class="uk-card-title"><a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team['id']; ?>&project=&directory=/projects/index.php"><?php echo $team['name']; ?></a></h2>
+          <p><?php echo $team['description']; ?></p>
+          <p>
+            <?php
+              // Get number of projects
 
-            $team = $row['id'];
+              $team_id = $team['id'];
 
-            $sql = "SELECT * FROM `projects` WHERE `projects`.`team` = '$team'";
-            $projects = mysqli_query($connection, $sql);
-            $rows = mysqli_num_rows($projects);
-          ?>
-          <p><a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $row['id']; ?>&project=&directory=/projects/index.php"><?php echo $rows; ?> <i class="far fa-project-diagram"></i></a></p>
-        </div>
+              $sql = "SELECT * FROM `projects` WHERE `projects`.`team` = '$team_id'";
+              $projects = mysqli_query($connection, $sql);
+              $rows = mysqli_num_rows($projects);
+            ?>
+            <span uk-tooltip="title: Projects">
+              <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&directory=/projects/index.php"><?php echo $rows; ?> <i class="far fa-project-diagram"></i></a>
+            </span>
+            <?php
+              // Get number of tasks
+
+              $sql = "SELECT * FROM `tasks` WHERE `tasks`.`team` = '$team_id'";
+              $tasks = mysqli_query($connection, $sql);
+              $rows = mysqli_num_rows($tasks);
+            ?>
+            <span uk-tooltip="title: Tasks">
+              <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&directory=/tasks/index.php"><?php echo $rows; ?> <i class="far fa-check-double"></i></a>
+            </span>
+            <?php
+              // Get number of comments
+
+              $sql = "SELECT * FROM `comments` WHERE `comments`.`team` = '$team_id'";
+              $comments = mysqli_query($connection, $sql);
+              $rows = mysqli_num_rows($comments);
+            ?>
+            <span uk-tooltip="title: Discussions">
+              <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&directory=/comments/index.php"><?php echo $rows; ?> <i class="far fa-comment"></i></a>
+            </span>
+          </p>
       </div>
     </div>
   <?php endwhile; ?>

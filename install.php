@@ -36,6 +36,24 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
   ";
   mysqli_query($connection, $sql);
 
+  $sql = "CREATE TABLE `activity` (
+      id INT(11) NOT NULL AUTO_INCREMENT,
+      description TEXT NOT NULL,
+      author INT(11) NOT NULL,
+      time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      link VARCHAR(255) NOT NULL,
+      PRIMARY KEY (`id`)
+    )
+  ";
+  mysqli_query($connection, $sql);
+
+  $sql = "CREATE TABLE `members_teams` (
+      member INT(11) NOT NULL,
+      team INT(11) NOT NULL
+    )
+  ";
+  mysqli_query($connection, $sql);
+
   $sql = "CREATE TABLE `projects` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
@@ -52,10 +70,13 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       id INT(11) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
+      team INT(11) NOT NULL,
       project INT(11) NOT NULL,
       progress INT(11) NOT NULL,
+      priority INT(11) NOT NULL,
       budget INT(11) NOT NULL,
       goal INT(11) NOT NULL,
+      start DATE NOT NULL,
       due DATE NOT NULL,
       PRIMARY KEY (`id`)
     )
@@ -66,6 +87,7 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       id INT(11) NOT NULL AUTO_INCREMENT,
       subject VARCHAR(255) NOT NULL,
       comment TEXT NOT NULL,
+      team INT(11) NOT NULL,
       project INT(11) NOT NULL,
       author INT(11) NOT NULL,
       time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -117,31 +139,47 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
 
     // Create dummy teams
 
-    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Visitor Services', 'A section for projects in the visitor services department');";
-    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Gallery Guides', 'Projects for the gallery guides');";
-    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Memberships Services', 'A section for projects in the memberships department');";
-    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Education', 'A section for projects in the education department');";
-    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Public Engagement', 'Projects for public engagement');";
+    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Maintenance', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');";
+    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('IT', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');";
+    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Marketing', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');";
+    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Human Resources', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');";
+    $sql.= "INSERT INTO `teams` (`name`,`description`) VALUES ('Business Development', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');";
+
+    // Asign members to teams
+
+    $sql.= "INSERT INTO `members_teams` (`member`,`team`) VALUES ('1', '1');";
+    $sql.= "INSERT INTO `members_teams` (`member`,`team`) VALUES ('2', '2');";
+    $sql.= "INSERT INTO `members_teams` (`member`,`team`) VALUES ('1', '3');";
+    $sql.= "INSERT INTO `members_teams` (`member`,`team`) VALUES ('2', '3');";
+    $sql.= "INSERT INTO `members_teams` (`member`,`team`) VALUES ('3', '3');";
+
+    // Create dummy activity
+
+    $sql.= "INSERT INTO `activity` (`description`, `author`, `link`) VALUES ('added a team', '1', '/teams/index.php');";
+    $sql.= "INSERT INTO `activity` (`description`, `author`, `link`) VALUES ('deleted a team', '3', '/teams/index.php');";
+    $sql.= "INSERT INTO `activity` (`description`, `author`, `link`) VALUES ('modified a task', '2', '/tasks/index.php');";
+    $sql.= "INSERT INTO `activity` (`description`, `author`, `link`) VALUES ('made a comment', '1', '/comments/index.php');";
 
     // Create dummy projects
 
-    $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'We are going to clean up the visitor services department to better server our visitors.', '1');";
-    $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'We are going to clean up the visitor services department to better server our visitors.', '1');";
-    $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'We are going to clean up the visitor services department to better server our visitors.', '2');";
+    $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Spring Cleaning', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1');";
+    $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Winter Cleaning', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1');";
+    $sql.= "INSERT INTO `projects` (`name`,`description`, `team`) VALUES ('Upgrade Computers and Software', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2');";
 
-    // Create dummy projects
+    // Create dummy tasks
 
-    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Scrub the toilets', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '14000', '20000');";
-    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Scrub the shower', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '2', '12000', '30000');";
-    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Clean the sink', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '3', '10000', '4000');";
-    $sql.= "INSERT INTO `tasks` (`name`,`description`, `project`, `progress`, `budget`, `goal`) VALUES ('Take out the trash', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '4', '1000', '700');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `team`, `project`, `progress`, `priority`, `budget`, `goal`) VALUES ('Scrub the toilets', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '1', '1', '14000', '20000');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `team`, `project`, `progress`, `priority`, `budget`, `goal`) VALUES ('Scrub the shower', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '2', '2', '12000', '30000');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `team`, `project`, `progress`, `priority`, `budget`, `goal`) VALUES ('Clean the sink', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '3', '1', '10000', '4000');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `team`, `project`, `progress`, `priority`, `budget`, `goal`) VALUES ('Take out the trash', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '1', '3', '1000', '700');";
+    $sql.= "INSERT INTO `tasks` (`name`,`description`, `team`, `project`, `progress`, `priority`, `budget`, `goal`) VALUES ('Install Allen Wrench on all Institution Computers', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2', '1', '1', '3', '0', '10000');";
 
     // Create dummy comments
 
-    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `project`, `author`) VALUES ('This is the first comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1');";
-    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `project`, `author`) VALUES ('This is the second comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2', '1');";
-    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `project`, `author`) VALUES ('This is the third comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '3', '1');";
-    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `project`, `author`) VALUES ('This is the fourth comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '2')";
+    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `team`, `project`, `author`) VALUES ('This is the first comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '1');";
+    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `team`, `project`, `author`) VALUES ('This is the second comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '1');";
+    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `team`, `project`, `author`) VALUES ('This is the third comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '1');";
+    $sql.= "INSERT INTO `comments` (`subject`,`comment`, `team`, `project`, `author`) VALUES ('This is the fourth comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '2')";
 
     mysqli_multi_query($connection, $sql);
 

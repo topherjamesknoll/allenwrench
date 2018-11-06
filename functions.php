@@ -23,25 +23,22 @@ function avatar($user, $size) {
 
   if (file_exists(dirname(__FILE__) . '/uploads/avatars/' . $user . '.jpg')) {
     echo '
-        <img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/' . $user . '.jpg" width="'. $size . '" height="' . $size . '" title="' . $row['user'] . '">
+        <div uk-tooltip="title: ' . $row['user'] . '"><img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/' . $user . '.jpg" width="'. $size . '" height="' . $size . '"></div>
     ';
   }
   else {
     echo '
-      <img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/default.jpg" width="'. $size . '" height="' . $size . '" title="' . $row['user'] . '">
+      <div uk-tooltip="title: ' . $row['user'] . '"><img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/default.jpg" width="'. $size . '" height="' . $size . '"></div>
     ';
   }
 }
 
-function progress_class($progress) {
-  if ($progress==1) {
-    echo 'uk-alert-success';
-  }
-  elseif ($progress==2) {
-    echo 'uk-alert-warning';
-  }
-  elseif ($progress==3) {
+function priority_class($priority) {
+  if ($priority==3) {
     echo 'uk-alert-danger';
+  }
+  elseif ($priority==2) {
+    echo 'uk-alert-warning';
   }
   else {
     return;
@@ -49,17 +46,14 @@ function progress_class($progress) {
 }
 
 function progress($progress) {
-  if ($progress==1) {
-    echo ' | Completed';
+  if ($progress==3) {
+    echo ' | <strong><em>On hold</em></strong>';
   }
   elseif ($progress==2) {
-    echo ' | In-progress';
+    echo ' | <strong><em>In-progress</em></strong>';
   }
-  elseif ($progress==3) {
-    echo ' | On hold';
-  }
-  else {
-    return;
+  elseif ($progress==1) {
+    echo ' | <strong><em>Completed</em></strong>';
   }
 }
 

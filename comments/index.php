@@ -6,6 +6,7 @@
 // Get project information
 
 session_start();
+$team_id = $_SESSION['team'];
 $project_id = $_SESSION['project'];
 $author = $_SESSION['user'];
 
@@ -22,10 +23,8 @@ if (isset($_POST['comment'])) {
   $comment = $_POST['comment'];
   $email = $_POST['email'];
 
-  $sql = "INSERT INTO `comments` (`subject`, `comment`, `project`, `author`) VALUES ('$subject', '$comment', '$project_id', '$author')";
+  $sql = "INSERT INTO `comments` (`subject`, `comment`, `team`, `project`, `author`) VALUES ('$subject', '$comment', '$team_id', '$project_id', '$author')";
   mysqli_query($connection, $sql);
-
-  // Send confirmation link
 
   if ($email=='true') {
 
@@ -76,32 +75,39 @@ mysqli_close($connection);
 </div>
 <?php else : ?>
   <div uk-grid>
-    <div>
-      <p class="uk-text-bold"><?php echo mysqli_num_rows($comments); ?> Comments for</p>
+    <div class="uk-width-expand@s">
+      <p class="uk-text-bold"><?php echo mysqli_num_rows($comments); ?> Discussions for</p>
       <h1><?php if ($project['name']!='') : echo $project['name']; else : ?>Untitled<?php endif; ?></h1>
       <p><?php echo $project['description']; ?></p>
     </div>
-    <div class="uk-width-expand uk-text-right">
-      <a href="#jqueryform" class="uk-button uk-button-primary">Add Comment</a>
+    <div>
+      <a href="#adddiscussion" class="uk-button uk-button-primary">Add Discussion</a>
     </div>
   </div>
   <div class="uk-child-width-1-1" uk-grid>
     <?php while($comment = mysqli_fetch_assoc($comments)) : ?>
       <div>
         <div class="uk-card uk-card-default uk-card-body uk-card-small">
-          <div uk-grid>
-            <div class="uk-width-auto">
-              <?php avatar($comment['author'],38); ?>
-            </div>
-            <div class="uk-width-expand">
-              <h3 class="uk-card-title uk-margin-remove"><?php echo $comment['subject']; ?></h3>
-              <p class="uk-text-small uk-text-muted uk-margin-remove"><?php user($comment['author']); ?> on <?php echo date('M j g:i A', $comment['time']); ?></p>
-            </div>
+          <article class="uk-comment">
+            <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+              <div class="uk-width-auto">
+                <?php avatar($comment['author'],38); ?>
+              </div>
+              <div class="uk-width-expand">
+                <h4 class="uk-comment-title uk-margin-remove"><?php echo $comment['subject']; ?></h4>
+                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                  <li style="flex: 0 1 auto;"><?php user($comment['author']); ?> on <?php echo date('M j g:i A', $comment['time']); ?> |&nbsp;<a href="#adddiscussion">REPLY</a></li>
+                </ul>
+              </div>
+            </header>
+          <div class="uk-comment-body">
+            <p><?php echo $comment['comment']; ?></p>
           </div>
-          <p><?php echo $comment['comment']; ?></p>
+          </article>
         </div>
       </div>
     <?php endwhile; ?>
+    <h1 id="adddiscussion">Add to the Discussion</h1>
     <div>
       <div class="uk-card uk-card-default uk-card-small uk-card-body">
         <form action="index.php" method="post" id="jqueryform">
@@ -109,7 +115,7 @@ mysqli_close($connection);
           <p><input type="text" name="subject" class="uk-input"></p>
           <p>Message:</p>
           <textarea rows="8" class="uk-textarea" name="comment" id="comment"></textarea>
-          <p><span class="uk-button uk-button-primary" id="jqueryformsubmit">Leave Comment</span></p>
+          <p><span class="uk-button uk-button-primary" id="jqueryformsubmit">Add</span></p>
           <p><input type="checkbox" class="uk-checkbox" name="email" value="true" checked> Email team this comment</p>
         </form>
         <script>

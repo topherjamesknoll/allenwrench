@@ -18,7 +18,7 @@
     <ul class="uk-navbar-nav">
       <li>
         <a href="#"><?php avatar($_SESSION['user'],38); ?></a>
-        <div class="uk-navbar-dropdown">
+        <div uk-dropdown="pos: bottom-justify">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><a href="<?php echo ABSPATH; ?>/auth/add.php">Invite Members</a></li>
             <li><a href="<?php echo ABSPATH; ?>/auth/edit.php">Edit Profile</a></li>
@@ -35,14 +35,17 @@
   <div class="uk-offcanvas-bar">
     <h2><i class="far fa-project-diagram"></i> Allen Wrench</h2>
     <ul class="uk-nav uk-nav-default">
+    <li><a href="<?php echo ABSPATH; ?>/activity.php">Activity</a></li>
+    <li class="uk-nav-divider"></li>
     <li><a href="<?php echo ABSPATH; ?>/index.php">Teams</a></li>
     <li><a href="<?php echo ABSPATH; ?>/projects/index.php">Projects</a></li>
     <li><a href="<?php echo ABSPATH; ?>/tasks/index.php">Tasks</a></li>
-    <li><a href="<?php echo ABSPATH; ?>/comments/index.php">Comments</a></li>
+    <li><a href="<?php echo ABSPATH; ?>/comments/index.php">Discussions</a></li>
     <li class="uk-nav-divider"></li>
     <li><a href="mailto:topher@getallenwrench.com">Email Support</a></li>
     </ul>
   </div>
 </div>
 
-<div class="uk-container uk-container-expand uk-padding">
+<div class="uk-section uk-section-default">
+  <div class="uk-container uk-container-expand">
