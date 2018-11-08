@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
@@ -22,56 +22,46 @@ if (isset($_POST['title'])) { $title = $_POST['title']; }
 
 // Get info for fields
 
-connect();
-$sql = "SELECT `email`, `user`, `password`, `first`, `last`, `title` FROM `members` WHERE `members`.`id` = '$user'";
-$result = mysqli_query($connection, $sql);
-$row = mysqli_fetch_assoc($result);
+$members = $mysqli->query("SELECT `email`, `user`, `password`, `first`, `last`, `title` FROM `members` WHERE `members`.`id` = '$user'");
+$member = $members->fetch_assoc();
 
-if (empty($_POST['email'])) { $email=$row['email']; }
-if (empty($_POST['username'])) { $username=$row['user']; }
-if (empty($_POST['password'])) { $password=$row['password']; }
-if (empty($_POST['first'])) { $first=$row['first']; }
-if (empty($_POST['last'])) { $last=$row['last']; }
-if (empty($_POST['title'])) { $title=$row['title']; }
+if (empty($_POST['email'])) { $email=$member['email']; }
+if (empty($_POST['username'])) { $username=$member['user']; }
+if (empty($_POST['password'])) { $password=$member['password']; }
+if (empty($_POST['first'])) { $first=$member['first']; }
+if (empty($_POST['last'])) { $last=$member['last']; }
+if (empty($_POST['title'])) { $title=$member['title']; }
 
 // Insert into database
 
-$sql = "UPDATE `members` SET `email` = '$email', `user` = '$username', `password` = '$password', `first` = '$first', `last` = '$last', `title` = '$title'  WHERE `members`.`id` = $user";
-mysqli_query($connection, $sql);
+$mysqli->query("UPDATE `members` SET `email` = '$email', `user` = '$username', `password` = '$password', `first` = '$first', `last` = '$last', `title` = '$title'  WHERE `members`.`id` = $user");
 
 ?>
 
 <?php require_once '../template-parts/header.php'; ?>
 
-<style>
-  body {
-		background:url('<?php echo ABSPATH; ?>/images/background.jpg'); no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-</style>
-<div uk-grid>
-  <div class="uk-width-1-4@m"></div>
-  <div class="uk-width-1-2@m uk-padding">
-    <h1 class="uk-text-center title"><i class="far fa-project-diagram"></i> Allen Wrench</h1>
-  </div>
-</div>
-<div uk-grid>
-  <div class="uk-width-1-4@m"></div>
-  <div class="uk-width-1-2@m">
-    <div class="uk-card uk-card-default uk-card-body">
-      <form action="edit.php" method="post">
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once '../template-parts/sidebar.php'; ?>
+
+<div class="uk-width-2-3@m uk-width-3-4@l">
+
+<div class="uk-section">
+<div class="uk-container uk-container-expand">
+
+<h1>Edit your Profile</h1>
+<div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
+	<div>
+		<div class="uk-card uk-card-default uk-card-body uk-card-small">
+      <form action="edit.php" method="post" id="cmxform">
 				<div><?php avatar($user,100); ?></div>
 				<p><a href="<?php echo ABSPATH; ?>/members/avatar.php" target="_blank">Change picture</a></p>
-				<h2>Edit your Profile</h2>
         <p>Email Address:</p>
-        <input type="text" name="email" class="uk-input" value="<?php echo $email; ?>">
+        <input type="email" name="email" class="uk-input" value="<?php echo $email; ?>" required>
         <p>Username:</p>
-        <input type="text" name="username" class="uk-input" id="required" value="<?php echo $username; ?>">
+        <input type="text" name="username" class="uk-input" value="<?php echo $username; ?>" required>
         <p>Password:</p>
-        <input type="password" name="password" class="uk-input">
+        <input type="password" name="password" class="uk-input" required>
         <p>First Name:</p>
         <input type="text" name="first" class="uk-input" value="<?php echo $first; ?>">
         <p>Last Name:</p>
@@ -80,6 +70,9 @@ mysqli_query($connection, $sql);
         <input type="text" name="title" class="uk-input" value="<?php echo $title; ?>">
         <p><input type="submit" value="Update" class="uk-button uk-button-primary submit"></p>
       </form>
+			<script>
+				$("#cmxform").validate();
+			</script>
     </div>
   </div>
 </div>

@@ -1,17 +1,17 @@
 <?php
 
-if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['databaseuser']) && isset($_POST['databasepassword']) && isset($_POST['administratoruser']) && isset($_POST['administratorpassword'])) {
+if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['user']) && isset($_POST['password']) && isset($_POST['administratoruser']) && isset($_POST['administratorpassword'])) {
 
   $host = $_POST['host'];
   $database = $_POST['database'];
-  $database_user = $_POST['databaseuser'];
-  $database_password = $_POST['databasepassword'];
+  $user = $_POST['user'];
+  $password = $_POST['password'];
   $administrator_user = strtolower($_POST['administratoruser']);
   $administrator_password = $_POST['administratorpassword'];
 
   // Create tables
 
-  $connection = mysqli_connect($host, $database_user, $database_password, $database);
+  $mysqli = new mysqli($host,$user,$password,$database);
   $sql = "CREATE TABLE `members` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       email VARCHAR(255) NOT NULL,
@@ -23,38 +23,30 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       last VARCHAR(255) NOT NULL,
       title VARCHAR(255) NOT NULL,
       PRIMARY KEY (`id`)
-    )
+    );
   ";
-  mysqli_query($connection, $sql);
-
-  $sql = "CREATE TABLE `teams` (
+  $sql.= "CREATE TABLE `teams` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
       PRIMARY KEY (`id`)
-    )
+    );
   ";
-  mysqli_query($connection, $sql);
-
-  $sql = "CREATE TABLE `activity` (
+  $sql.= "CREATE TABLE `activity` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       description TEXT NOT NULL,
       author INT(11) NOT NULL,
       time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       link VARCHAR(255) NOT NULL,
       PRIMARY KEY (`id`)
-    )
+    );
   ";
-  mysqli_query($connection, $sql);
-
-  $sql = "CREATE TABLE `members_teams` (
+  $sql.= "CREATE TABLE `members_teams` (
       member INT(11) NOT NULL,
       team INT(11) NOT NULL
-    )
+    );
   ";
-  mysqli_query($connection, $sql);
-
-  $sql = "CREATE TABLE `projects` (
+  $sql.= "CREATE TABLE `projects` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
@@ -62,11 +54,9 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       budget INT(11) NOT NULL,
       team INT(11) NOT NULL,
       PRIMARY KEY (`id`)
-    )
+    );
   ";
-  mysqli_query($connection, $sql);
-
-  $sql = "CREATE TABLE `tasks` (
+  $sql.= "CREATE TABLE `tasks` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
       description TEXT NOT NULL,
@@ -79,11 +69,9 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       start DATE NOT NULL,
       due DATE NOT NULL,
       PRIMARY KEY (`id`)
-    )
+    );
   ";
-  mysqli_query($connection, $sql);
-
-  $sql = "CREATE TABLE `comments` (
+  $sql.= "CREATE TABLE `comments` (
       id INT(11) NOT NULL AUTO_INCREMENT,
       subject VARCHAR(255) NOT NULL,
       comment TEXT NOT NULL,
@@ -94,32 +82,39 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
       PRIMARY KEY (`id`)
     )
   ";
-  mysqli_query($connection, $sql);
+  $mysqli->multi_query($sql);
+  
+  // Flush
+
+  while ($mysqli->next_result()) { if (!$mysqli->more_results()) break; }
 
   // Create config.php
 
   $abspath = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . dirname($_SERVER[PHP_SELF]);
 
-
   $config_file = fopen("config.php", "w");
-  $config_body = "
-    <?
+  $config_body = '
+    <?php
 
-    // Variables
+    // Set variables
 
-    define('HOST','" . $host . "');
-    define('USER','" . $database_user . "');
-    define('PASSWORD','" . $database_password . "');
-    define('DATABASE','" . $database . "');
+    define(\'HOST\',\'' . $host . '\');
+    define(\'USER\',\'' . $user . '\');
+    define(\'PASSWORD\',\'' . $password . '\');
+    define(\'DATABASE\',\'' . $database . '\');
 
-    define('ABSPATH','" . $abspath . "');
+    define(\'ABSPATH\',\'' . $abspath . '\');
 
-    // Functions
+    // Connect to database
 
-    require_once 'functions.php';
+    $mysqli = new mysqli(\'' . $host . '\',\'' . $user . '\',\'' . $password . '\',\'' . $database . '\');
+
+    // Load functions
+
+    require_once \'functions.php\';
 
     ?>
-  ";
+  ';
   fwrite($config_file, $config_body);
   fclose($config_file);
 
@@ -127,8 +122,11 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
 
   $administrator_password = hash('ripemd160', $administrator_password);
 
-  $sql = "INSERT INTO `members` (`user`,`password`,`active`, `title`) VALUES ('$administrator_user', '$administrator_password', '1', 'Administrator')";
-  mysqli_query($connection, $sql);
+  $mysqli->query("INSERT INTO `members` (`user`,`password`,`active`, `title`) VALUES ('$administrator_user', '$administrator_password', '1', 'Administrator')");
+
+  // Flush
+
+  while ($mysqli->next_result()) { if (!$mysqli->more_results()) break; }
 
   if (isset($_POST['examples'])) {
 
@@ -181,13 +179,9 @@ if (isset($_POST['host']) && isset($_POST['database']) && isset($_POST['database
     $sql.= "INSERT INTO `comments` (`subject`,`comment`, `team`, `project`, `author`) VALUES ('This is the third comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '1');";
     $sql.= "INSERT INTO `comments` (`subject`,`comment`, `team`, `project`, `author`) VALUES ('This is the fourth comment in the database', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '1', '1', '2')";
 
-    mysqli_multi_query($connection, $sql);
+    $mysqli->multi_query($sql);
 
   }
-
-  mysqli_close($connection);
-
-
 
   // Send to homepage
 
@@ -237,9 +231,9 @@ else if (file_exists('config.php')) {
         <p>Database name:</p>
         <p><input type="text" name="database" class="uk-input"></p>
         <p>Database username:</p>
-        <p><input type="text" name="databaseuser" class="uk-input"></p>
+        <p><input type="text" name="user" class="uk-input"></p>
         <p>Database password:</p>
-        <p><input type="password" name="databasepassword" class="uk-input"></p>
+        <p><input type="password" name="password" class="uk-input"></p>
         <p><input type="button" id="installnextbutton" value="Next" class="uk-button uk-button-primary uk-button-large">
         <p>Need help? Email <a href="mailto:topher@allenwrench.com">topher@allenwrench.com</a></p>
       </div>

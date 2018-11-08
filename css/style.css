@@ -12,6 +12,10 @@
 @import url('fontawesome.min.css');
 @import url('pikaday.css');
 
+body {
+  margin-top: -80px;
+}
+
 /* Custom */
 
 .title {
@@ -22,6 +26,9 @@
 
 em {
   color: inherit;
+}
+.uk-section {
+  margin-top: 80px;
 }
 
 /* Links */
@@ -41,6 +48,15 @@ a {
 
 /* Buttons */
 
-.uk-button-primary {
-  background: #00BFFF;
+.uk-button-primary,
+.uk-button-primary:hover,
+.uk-button-primary:focus,
+.uk-button-primary:active {
+  background: #FFC24D;
+}
+
+/* JQuery Validation */
+.error {
+  color: #F0506E;
+  font-weight: bold;
 }

@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
@@ -9,35 +9,47 @@ if (isset($_SESSION['project'])) { $project_id = $_SESSION['project']; }
 
 // Get team information
 
-connect();
-$sql = "SELECT `id`, `name`, `description` FROM `teams` WHERE `teams`.`id` = '$team_id'";
-$teams = mysqli_query($connection, $sql);
-$team = mysqli_fetch_assoc($teams);
+$teams = $mysqli->query("SELECT `id`, `name`, `description` FROM `teams` WHERE `teams`.`id` = '$team_id'");
+$team = $teams->fetch_assoc();
 
 // Get projects
 
-$sql = "SELECT * FROM `projects` WHERE `projects`.`team` = '$team_id'";
-$projects = mysqli_query($connection, $sql);
-
+$projects = $mysqli->query("SELECT * FROM `projects` WHERE `projects`.`team` = '$team_id'");
 
 ?>
 
 <?php require_once '../template-parts/header.php'; ?>
 
-<div uk-grid>
-  <div class="uk-width-expand@s">
-    <p class="uk-text-bold"><?php echo mysqli_num_rows($projects); ?> Projects for</p>
-    <h1><?php if ($team['name']!='') : echo $team['name']; else : ?>Untitled<?php endif; ?></h1>
-    <p><?php echo $team['description']; ?></p>
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once '../template-parts/sidebar.php'; ?>
+
+<div class="uk-width-2-3@m uk-width-3-4@l">
+
+<div class="uk-section">
+<div class="uk-container uk-container-expand">
+
+<?php if ($team_id!='') : ?>
+  <div uk-grid>
+    <div class="uk-width-expand@s">
+      <p class="uk-text-bold"><?php echo $projects->num_rows; ?> projects for</p>
+      <h1><?php if ($team['name']!='') : echo $team['name']; else : ?>Untitled<?php endif; ?></h1>
+      <p><?php echo $team['description']; ?></p>
+    </div>
+    <div>
+      <?php if ($teams->num_rows!=0) : ?>
+        <a href="<?php echo ABSPATH; ?>/projects/add.php?teamid=<?php echo $team['id']; ?>" class="uk-button uk-button-primary">Add Project</a>
+      <?php endif; ?>
+    </div>
   </div>
-  <div>
-    <?php if (mysqli_num_rows($teams)!=0) : ?>
-      <a href="<?php echo ABSPATH; ?>/projects/add.php?teamid=<?php echo $team['id']; ?>" class="uk-button uk-button-primary">Add Project</a>
-    <?php endif; ?>
-    <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-default">Add Team</a>
+<?php else : ?>
+  <div class="uk-alert-warning" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <h3>No Team</h3>
+    <p>Please go back and select a team.</p>
   </div>
-</div>
-<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-4@l" uk-grid>
+<?php endif; ?>
+<div class="uk-grid-match uk-child-width-1-2@m uk-child-width-1-3@l" uk-grid>
   <?php while ($project = mysqli_fetch_assoc($projects)) : ?>
     <div>
       <div class="uk-card uk-card-default uk-card-body uk-card-hover uk-card-small">
@@ -62,8 +74,8 @@ $projects = mysqli_query($connection, $sql);
             // Get number of tasks
 
             $project_id = $project['id'];
-            $sql = "SELECT * FROM `tasks` WHERE `tasks`.`project` = '$project_id'";
-            $tasks = mysqli_query ($connection, $sql);
+
+            $tasks = $mysqli->query("SELECT * FROM `tasks` WHERE `tasks`.`project` = '$project_id'");
 
           ?>
           <span uk-tooltip="title: Tasks">
@@ -72,8 +84,7 @@ $projects = mysqli_query($connection, $sql);
           <?php
             // Get number of comments
 
-            $sql = "SELECT * FROM `comments` WHERE `comments`.`project` = '$project_id'";
-            $comments = mysqli_query ($connection, $sql);
+            $comments = $mysqli->query("SELECT * FROM `comments` WHERE `comments`.`project` = '$project_id'");
 
           ?>
           <span uk-tooltip="title: Discussions">
@@ -81,27 +92,31 @@ $projects = mysqli_query($connection, $sql);
           </span>
         </p>
         <?php
-          // Get total budget
+          // Get budget
 
-          $sql = "SELECT SUM(`budget`) AS `value_sum` FROM `tasks` WHERE `tasks`.`project` = '$project_id'";
-          $budgets = mysqli_query($connection, $sql);
-          $budget = mysqli_fetch_assoc($budgets);
+          $budgets = $mysqli->query("SELECT SUM(`budget`) AS `value_sum` FROM `tasks` WHERE `tasks`.`project` = '$project_id'");
+          $budget = $budgets->fetch_assoc;
           echo 'Budgets $' . number_format($budget['value_sum']);
 
         ?>
         <br>
         <?php
-          // Get total budget
+          // Get goal
 
-          $sql = "SELECT SUM(`goal`) AS `value_sum` FROM `tasks` WHERE `tasks`.`project` = '$project_id'";
-          $goals = mysqli_query($connection, $sql);
-          $goal = mysqli_fetch_assoc($goals);
+          $goals = $mysqli->query("SELECT SUM(`goal`) AS `value_sum` FROM `tasks` WHERE `tasks`.`project` = '$project_id'");
+          $goal = $goals->fetch_assoc();
           echo 'Goals $' . number_format($goal['value_sum']);
 
         ?>
       </div>
     </div>
   <?php endwhile; ?>
+</div>
+
+</div>
+</div>
+
+</div>
 </div>
 
 <?php require_once '../template-parts/footer.php'; ?>

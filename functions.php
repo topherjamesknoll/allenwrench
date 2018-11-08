@@ -7,28 +7,22 @@ function user_redirect() {
   }
 }
 
-function connect() {
-  global $connection;
-  $connection = mysqli_connect(HOST,USER,PASSWORD,DATABASE);
-}
-
 function avatar($user, $size) {
 
   // Get user name
 
-  $connection = mysqli_connect(HOST,USER,PASSWORD,DATABASE);
-  $sql = "SELECT `user` FROM `members` WHERE `members`.`id` = '$user'";
-  $result = mysqli_query($connection, $sql);
-  $row = mysqli_fetch_assoc($result);
+  $mysqli = new mysqli(HOST,USER,PASSWORD,DATABASE);
+  $members = $mysqli->query("SELECT `user` FROM `members` WHERE `members`.`id` = '$user'");
+  $member = $members->fetch_assoc();
 
   if (file_exists(dirname(__FILE__) . '/uploads/avatars/' . $user . '.jpg')) {
     echo '
-        <div uk-tooltip="title: ' . $row['user'] . '"><img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/' . $user . '.jpg" width="'. $size . '" height="' . $size . '"></div>
+        <span uk-tooltip="title: ' . $member['user'] . '"><img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/' . $user . '.jpg" width="'. $size . '" height="' . $size . '"></span>
     ';
   }
   else {
     echo '
-      <div uk-tooltip="title: ' . $row['user'] . '"><img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/default.jpg" width="'. $size . '" height="' . $size . '"></div>
+      <span uk-tooltip="title: ' . $member['user'] . '"><img class="uk-border-circle" src="' . ABSPATH . '/uploads/avatars/default.jpg" width="'. $size . '" height="' . $size . '"></span>
     ';
   }
 }
@@ -61,15 +55,14 @@ function user($user) {
 
   // Get user name
 
-  $connection = mysqli_connect(HOST,USER,PASSWORD,DATABASE);
-  $sql = "SELECT `user`,`first`,`last`,`title` FROM `members` WHERE `members`.`id` = '$user'";
-  $result = mysqli_query($connection, $sql);
-  $row = mysqli_fetch_assoc($result);
+  $mysqli = new mysqli(HOST,USER,PASSWORD,DATABASE);
+  $members = $mysqli->query("SELECT `user`,`first`,`last`,`title` FROM `members` WHERE `members`.`id` = '$user'");
+  $member = $members->fetch_assoc();
 
-  $first = $row['first'];
-  $last = $row['last'];
-  $username = $row['user'];
-  $title = $row['title'];
+  $first = $member['first'];
+  $last = $member['last'];
+  $username = $member['user'];
+  $title = $member['title'];
 
   echo $username . ' | ';
   if ($first!='') {

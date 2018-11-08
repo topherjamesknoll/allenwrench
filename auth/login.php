@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 
 <?php
 
@@ -6,13 +6,11 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
   $user = $_POST['user'];
   $password = hash('ripemd160', $_POST['password']);
 
-  connect();
-  $sql = "SELECT `id` FROM `members` WHERE `user` = '$user' AND `password` = '$password'";
-  $result = mysqli_query($connection, $sql);
-  $row = mysqli_fetch_assoc($result);
-  if (mysqli_num_rows($result) == 1) {
+  $members = $mysqli->query("SELECT `id` FROM `members` WHERE `user` = '$user' AND `password` = '$password'");
+  $member = $members->fetch_assoc();
+  if ($members->num_rows == 1) {
     session_start();
-    $_SESSION['user'] = $row['id'];
+    $_SESSION['user'] = $member['id'];
 
     header('Location: ' . ABSPATH . '/');
   }
@@ -25,9 +23,11 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
 
 <?php require_once '../template-parts/header.php'; ?>
 
+<div class="uk-width-1-1 uk-padding">
+
 <style>
   body {
-    background:url('<?php echo ABSPATH; ?>/images/background.jpg'); no-repeat center center;
+    background:url('<?php echo ABSPATH; ?>/images/01.png') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -57,6 +57,8 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
       </form>
     </div>
   </div>
+</div>
+
 </div>
 
 <?php require_once '../template-parts/footer.php'; ?>

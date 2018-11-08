@@ -1,20 +1,26 @@
-<?php require_once 'config.php'; ?>
+<?php if (file_exists('config.php')) : require_once 'config.php'; else : header('Location: install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
 
 // Get Comments
 
-connect();
-$sql = "SELECT * FROM `activity` ORDER BY `time`";
-$activities = mysqli_query($connection, $sql);
-mysqli_close($connection);
+$activities = $mysqli->query("SELECT * FROM `activity` ORDER BY `time`");
 
 ?>
 
 <?php require_once 'template-parts/header.php'; ?>
 
-<?php if (mysqli_num_rows($activities)==1) : ?>
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once 'template-parts/sidebar.php'; ?>
+
+<div class="uk-width-2-3@m uk-width-3-4@l">
+
+<div class="uk-section">
+<div class="uk-container uk-container-expand">
+
+<?php if ($ativities->num_rows=0) : ?>
   <div uk-alert class="uk-alert-warning">
   <a class="uk-alert-close" uk-close></a>
   <h3>Let's get to work!</h3>
@@ -23,7 +29,7 @@ mysqli_close($connection);
 <?php else : ?>
   <h1>Activity</h1>
   <div class="uk-child-width-1-1" uk-grid>
-    <?php while($activity = mysqli_fetch_assoc($activities)) : ?>
+    <?php while($activity = $activities->fetch_assoc()) : ?>
       <div>
         <div class="uk-card uk-card-default uk-card-body uk-card-small">
           <article class="uk-comment">
@@ -47,5 +53,11 @@ mysqli_close($connection);
     <?php endwhile; ?>
   </div>
 <?php endif; ?>
+
+</div>
+</div>
+
+</div>
+</div>
 
 <?php require_once 'template-parts/footer.php'; ?>

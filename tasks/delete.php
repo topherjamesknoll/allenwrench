@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
@@ -7,10 +7,7 @@ if (isset($_GET['task'])) {
 
   $task = $_GET['task'];
 
-  connect();
-  $sql = "DELETE FROM `tasks` WHERE `tasks`.`id` = '$task'";
-  mysqli_query($connection, $sql);
-  mysqli_close($connection);
+  $mysqli->query("DELETE FROM `tasks` WHERE `tasks`.`id` = '$task'");
 
   header('Location: ' . ABSPATH . '/tasks/index.php');
 

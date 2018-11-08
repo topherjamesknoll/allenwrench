@@ -3,15 +3,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo ABSPATH; ?>/css/style.css">
+  <script src="<?php echo ABSPATH; ?>/js/jquery.min.js"></script>
+  <script src="<?php echo ABSPATH; ?>/js/uikit.min.js"></script>
   <script src="<?php echo ABSPATH; ?>/js/ckeditor/ckeditor.js"></script>
   <script src="<?php echo ABSPATH; ?>/js/pikaday.js"></script>
-</head>
+  <script src="<?php echo ABSPATH; ?>/js/jquery-validation/jquery.validate.min.js"></script>
+  <script src="<?php echo ABSPATH; ?>/js/custom.js"></script>
+  </head>
 <body>
 
 <nav class="uk-navbar-container uk-light" uk-navbar uk-sticky>
   <div class="uk-navbar-left">
       <a class="uk-navbar-toggle" uk-toggle="target: #offcanvas-nav">
-          <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
+          <span class="uk-hidden@m" uk-navbar-toggle-icon></span> <span class="uk-margin-small-left uk-hidden@m">Menu</span>
       </a>
   </div>
   <div class="uk-navbar-center">
@@ -43,10 +47,7 @@
     <li><a href="<?php echo ABSPATH; ?>/comments/index.php">Discussions</a></li>
     <li><a href="<?php echo ABSPATH; ?>/calendar.php">Calendar</a></li>
     <li class="uk-nav-divider"></li>
-    <li><a href="mailto:topher@getallenwrench.com">Email Support</a></li>
+    <li><a href="https://getallenwrench.org/support.php">Support</a></li>
     </ul>
   </div>
 </div>
-
-<div class="uk-section uk-section-default">
-  <div class="uk-container uk-container-expand">

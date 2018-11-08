@@ -6,6 +6,30 @@
 /_/    \_\_|_|\___|_| |_|     \/  \/ |_|  \___|_| |_|\___|_| |_|
 
 *********************************
+* In Allen Wrench Version 1.2.5 *
+*********************************
+
+*** Bug Fixes ***
+
+Added CKEditor to add function for teams and projects
+Implemented the user() function in more areas
+Converted all MySQLi actions to object oriented programming
+Added JQuery Validation to forms
+Created more installation checks
+
+*** Planned Features ***
+
+Assignment of team members
+Auto update
+Lost password feature
+Dashboard
+
+*** Planned Fixes ***
+
+Special characters in database
+Date sorting in tasks
+
+*********************************
 * In Allen Wrench Version 1.2.4 *
 *********************************
 

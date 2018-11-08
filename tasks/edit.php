@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
@@ -6,8 +6,6 @@
 // Read form
 
 if (isset($_GET['id'])) { $id = $_GET['id']; }
-
-connect();
 
 if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['progress']) || isset($_GET['priority']) || isset($_GET['budget']) || isset($_GET['goal']) || isset($_GET['start']) || isset($_GET['due'])) {
 
@@ -24,8 +22,7 @@ if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['prog
 
   //Update task in database
 
-  $sql = "UPDATE `tasks` SET `name` = '$task_name', `description` = '$description', `progress` = '$progress', `priority` = '$priority', `budget` = '$budget', `goal` = '$goal', `start` = '$start', `due` = '$due' WHERE `tasks`.`id` = '$id'";
-  mysqli_query($connection, $sql);
+  $mysqli->query("UPDATE `tasks` SET `name` = '$task_name', `description` = '$description', `progress` = '$progress', `priority` = '$priority', `budget` = '$budget', `goal` = '$goal', `start` = '$start', `due` = '$due' WHERE `tasks`.`id` = '$id'");
 
   header('Location: ' . ABSPATH . '/tasks/index.php');
 
@@ -33,22 +30,30 @@ if (isset($_GET['taskname']) || isset($_GET['description']) || isset($_GET['prog
 
 // Get tasks
 
-$sql = "SELECT * FROM `tasks` WHERE `tasks`.`id` = '$id'";
-$tasks = mysqli_query($connection, $sql);
-$task = mysqli_fetch_assoc($tasks);
+$tasks = $mysqli->query("SELECT * FROM `tasks` WHERE `tasks`.`id` = '$id'");
+$task = $tasks->fetch_assoc();
 
 ?>
 
 <?php require_once '../template-parts/header.php'; ?>
 
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once '../template-parts/sidebar.php'; ?>
+
+<div class="uk-width-2-3@m uk-width-3-4@l">
+
+<div class="uk-section">
+<div class="uk-container uk-container-expand">
+
 <h1>Update Task</h1>
 <div class="uk-child-width-1-1" uk-grid>
   <div>
     <div class="uk-card uk-card-default uk-card-small uk-card-body">
-      <form action="edit.php" method="get" id="jqueryform">
+      <form action="edit.php" method="get" id="cmxform">
         <input type="hidden" name="id" value="<?php echo $id; ?>"
         <p>Name:</p>
-        <p><input type="text" name="taskname" class="uk-input" value="<?php echo $task['name']; ?>"></p>
+        <p><input type="text" name="taskname" class="uk-input" value="<?php echo $task['name']; ?>" required></p>
         <div class="uk-child-width-1-2" uk-grid>
           <div>
             <p>Start Date:</p>
@@ -103,13 +108,22 @@ $task = mysqli_fetch_assoc($tasks);
         </script>
         <p>Description:</p>
         <textarea rows="8" class="uk-textarea" name="description" id="description"><?php echo $task['description']; ?></textarea>
-        <p><span class="uk-button uk-button-primary" id="jqueryformsubmit">Update Task</span></p>
+        <p><input type="submit" class="uk-button uk-button-primary" value="Update Task"></p>
       </form>
       <script>
           CKEDITOR.replace( 'description' );
       </script>
+      <script>
+        $("#cmxform").validate();
+      </script>
     </div>
   </div>
+</div>
+
+</div>
+</div>
+
+</div>
 </div>
 
 <?php require_once '../template-parts/footer.php'; ?>

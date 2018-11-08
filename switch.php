@@ -2,7 +2,7 @@
 
 // This file switches the team and project then redirects
 
-require_once 'config.php';
+if (file_exists('config.php')) : require_once 'config.php'; else : header('Location: install.php'); endif;
 
 $team = $_GET['team'];
 $project = $_GET['project'];

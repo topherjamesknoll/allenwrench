@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
@@ -15,10 +15,7 @@ if (isset($_POST['email']) && isset($_POST['first']) && isset($_POST['last'])) {
 
 	// Insert into database
 
-	connect();
-	$sql = "INSERT INTO `members` (`email`, `active`, `confirmation`) VALUES ('$email', '0', '$confirmation')";
-	mysqli_query($connection, $sql);
-	mysqli_close($connection);
+	$mysqli->query("INSERT INTO `members` (`email`, `active`, `confirmation`) VALUES ('$email', '0', '$confirmation')");
 
 	// Send confirmation link
 
@@ -41,37 +38,39 @@ if (isset($_POST['email']) && isset($_POST['first']) && isset($_POST['last'])) {
 
 <?php require_once '../template-parts/header.php'; ?>
 
-<style>
-  body {
-    background:url('<?php echo ABSPATH; ?>/images/background.jpg'); no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-</style>
-<div uk-grid>
-  <div class="uk-width-1-4@m"></div>
-  <div class="uk-width-1-2@m uk-padding">
-    <h1 class="uk-text-center title"><i class="far fa-project-diagram"></i> Allen Wrench</h1>
-  </div>
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once '../template-parts/sidebar.php'; ?>
+
+<div class="uk-width-2-3@m uk-width-3-4@l">
+
+<div class="uk-section">
+<div class="uk-container uk-container-expand">
+
+<h1>Invite a Member</h1>
+<div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
+	<div>
+		<div class="uk-card uk-card-default uk-card-body uk-card-small">
+			<form action="add.php" method="post" id="cmxform">
+				<p>Email Address:</p>
+				<input type="email" name="email" class="uk-input" required>
+				<p>First Name:</p>
+				<input type="text" name="first" class="uk-input">
+				<p>Last Name:</p>
+				<input type="text" name="last" class="uk-input">
+				<p><input type="submit" value="Add" class="uk-button uk-button-primary submit"></p>
+			</form>
+			<script>
+				$("#cmxform").validate();
+			</script>
+		</div>
+	</div>
 </div>
-<div uk-grid>
-  <div class="uk-width-1-4@m"></div>
-  <div class="uk-width-1-2@m">
-    <div class="uk-card uk-card-default uk-card-body">
-      <form action="add.php" method="post">
-      <h2>Invite a Member</h2>
-        <p>Email Address:</p>
-        <input type="text" name="email" class="uk-input" id="required">
-        <p>First Name:</p>
-        <input type="text" name="first" class="uk-input">
-        <p>Last Name:</p>
-        <input type="text" name="last" class="uk-input">
-        <p><input type="submit" value="Add" class="uk-button uk-button-primary submit"></p>
-      </form>
-    </div>
-  </div>
+
+</div>
+</div>
+
+</div>
 </div>
 
 <?php require_once '../template-parts/footer.php'; ?>

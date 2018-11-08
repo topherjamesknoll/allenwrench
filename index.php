@@ -1,27 +1,24 @@
-<?php
-
-// Check to see if AW is installed
-
-if (!file_exists('config.php')) {
-  header('Location: install.php');
-}
-
-?>
-
-<?php require_once 'config.php'; ?>
+<?php if (file_exists('config.php')) : require_once 'config.php'; else : header('Location: install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
 
 // Get teams
 
-connect();
-$sql = "SELECT * FROM `teams`";
-$teams = mysqli_query($connection, $sql);
+$teams = $mysqli->query("SELECT * FROM `teams`");
 
 ?>
 
 <?php require_once 'template-parts/header.php'; ?>
+
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once 'template-parts/sidebar.php'; ?>
+
+<div class="uk-width-2-3@m uk-width-3-4@l">
+
+<div class="uk-section">
+<div class="uk-container uk-container-expand">
 
 <div uk-grid>
   <div class="uk-width-expand">
@@ -31,8 +28,8 @@ $teams = mysqli_query($connection, $sql);
     <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-primary">Add Teams</a>
   </div>
 </div>
-<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-4@l" uk-grid>
-  <?php while ($team = mysqli_fetch_assoc($teams)) : ?>
+<div class="uk-grid-match uk-child-width-1-2@m uk-child-width-1-3@l" uk-grid>
+  <?php while ($team = $teams->fetch_assoc()) : ?>
     <div>
       <div class="uk-card uk-card-default uk-card-body uk-card-small uk-card-hover">
           <p class="uk-text-right">
@@ -51,9 +48,8 @@ $teams = mysqli_query($connection, $sql);
 
               $team_id = $team['id'];
 
-              $sql = "SELECT * FROM `projects` WHERE `projects`.`team` = '$team_id'";
-              $projects = mysqli_query($connection, $sql);
-              $rows = mysqli_num_rows($projects);
+              $projects = $mysqli->query("SELECT * FROM `projects` WHERE `projects`.`team` = '$team_id'");
+              $rows = $projects->num_rows;
             ?>
             <span uk-tooltip="title: Projects">
               <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&directory=/projects/index.php"><?php echo $rows; ?> <i class="far fa-project-diagram"></i></a>
@@ -61,9 +57,8 @@ $teams = mysqli_query($connection, $sql);
             <?php
               // Get number of tasks
 
-              $sql = "SELECT * FROM `tasks` WHERE `tasks`.`team` = '$team_id'";
-              $tasks = mysqli_query($connection, $sql);
-              $rows = mysqli_num_rows($tasks);
+              $tasks = $mysqli->query("SELECT * FROM `tasks` WHERE `tasks`.`team` = '$team_id'");
+              $rows = $tasks->num_rows;
             ?>
             <span uk-tooltip="title: Tasks">
               <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&directory=/tasks/index.php"><?php echo $rows; ?> <i class="far fa-check-double"></i></a>
@@ -71,23 +66,34 @@ $teams = mysqli_query($connection, $sql);
             <?php
               // Get number of comments
 
-              $sql = "SELECT * FROM `comments` WHERE `comments`.`team` = '$team_id'";
-              $comments = mysqli_query($connection, $sql);
-              $rows = mysqli_num_rows($comments);
+              $comments = $mysqli->query("SELECT * FROM `comments` WHERE `comments`.`team` = '$team_id'");
+              $rows = $comments->num_rows;
             ?>
             <span uk-tooltip="title: Discussions">
               <a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $team_id; ?>&directory=/comments/index.php"><?php echo $rows; ?> <i class="far fa-comment"></i></a>
             </span>
+          </p>
+          <p>
+            <?php
+            // Get members
+
+            $team_id = $team['id'];
+
+            $members = $mysqli->query("SELECT `member` FROM `members_teams` WHERE `members_teams`.`team` = '$team_id'");
+            while ($member = $members->fetch_assoc()) {
+              echo avatar($member['member'], 38);
+            }
+            ?>
           </p>
       </div>
     </div>
   <?php endwhile; ?>
 </div>
 
-<?php
+</div>
+</div>
 
-mysqli_close($connection);
-
-?>
+</div>
+</div>
 
 <?php require_once 'template-parts/footer.php'; ?>
