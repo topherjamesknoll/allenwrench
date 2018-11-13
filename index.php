@@ -1,78 +1,60 @@
-<?php
-
-// Check to see if AW is installed
-
-if (!file_exists('config.php')) {
-  header('Location: install.php');
-}
-
-?>
-
-<?php require_once 'config.php'; ?>
+<?php if (file_exists('config.php')) : require_once 'config.php'; else : header('Location: install.php'); endif; ?>
 <?php user_redirect(); ?>
-
-<?php
-
-// Get teams
-
-connect();
-$sql = "SELECT * FROM `teams`";
-$result = mysqli_query($connection, $sql);
-
-?>
 
 <?php require_once 'template-parts/header.php'; ?>
 
-<?php if (mysqli_num_rows($result)==0) : ?>
-  <div uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <h3>It's quiet in here.</h3>
-    <p>There doesn't seem to be anything here. Try adding a team.</p>
-  </div>
-<?php endif; ?>
-<div uk-grid>
-  <div>
-    <h1>Teams</h1>
-  </div>
-  <div class="uk-width-expand uk-text-right">
-    <a href="<?php echo ABSPATH; ?>/teams/add.php" class="uk-button uk-button-primary">Add Team</a>
-  </div>
-</div>
-<div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid>
-  <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-    <div>
-      <div class="uk-card uk-card-default uk-card-small uk-card-hover">
-        <div class="uk-card-header">
-          <p class="uk-text-right">
-            <a href="<?php echo ABSPATH; ?>/teams/edit.php?teamid=<?php echo $row['id']; ?>"><i class="far fa-wrench"></i></a>
-            <a href="<?php echo ABSPATH; ?>/teams/delete.php?teamid=<?php echo $row['id']; ?>"><i class="far fa-trash-alt"></i></a>
-          </p>
-          <h2 class="uk-card-title"><a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $row['id']; ?>&project=&directory=/projects/index.php"><?php echo $row['name']; ?></a></h2>
-        </div>
-        <div class="uk-card-body">
-          <p><?php echo $row['description']; ?></p>
-        </div>
-        <div class="uk-card-footer">
-          <?php
-            // Get number of projects
-
-            $team = $row['id'];
-
-            $sql = "SELECT * FROM `projects` WHERE `projects`.`team` = '$team'";
-            $projects = mysqli_query($connection, $sql);
-            $rows = mysqli_num_rows($projects);
-          ?>
-          <p><a href="<?php echo ABSPATH; ?>/switch.php?team=<?php echo $row['id']; ?>&project=&directory=/projects/index.php"><?php echo $rows; ?> <i class="far fa-project-diagram"></i></a></p>
-        </div>
-      </div>
-    </div>
-  <?php endwhile; ?>
-</div>
-
 <?php
 
-mysqli_close($connection);
+$projects = $mysqli->query ("SELECT * FROM `projects`");
 
 ?>
+
+<div class="uk-grid-match" uk-grid>
+
+<?php require_once 'template-parts/sidebar.php'; ?>
+
+<div class="uk-width-expand">
+
+<div class="uk-section">
+
+<!--<ul uk-tab>
+  <li><a href="">Projects</a></li>
+  <li><a href="">Tasks</a></li>
+  <li><a href="">Discussions</a></li>
+  <li><a href="">Teams</a></li>
+</ul>-->
+
+<h1>Dashboard</h1>
+<div class="uk-child-width-1-2@m uk-child-width-1-3@l" uk-grid="masonry: true">
+  <?php while ($project = $projects->fetch_assoc()) : ?>
+  <div>
+    <div class="uk-card uk-card-default uk-card-body uk-card-small uk-card-hover">
+      <h2 class="uk-card-title">
+        <a href="<?php echo ABSPATH . '/tasks/index.php?project=' . $project['id']; ?>">
+          <?php if ($project['name'] != '') : echo $project['name']; else : echo 'Untitled'; endif; ?>
+        </a>
+      </h2>
+      <?php
+
+      // Get completed tasks
+
+      $project_id = $project['id'];
+
+      $completed_tasks = $mysqli->query("SELECT * FROM `tasks` WHERE `tasks`.`project` = $project_id AND `tasks`.`progress` = '1'");
+      $tasks = $mysqli->query("SELECT * FROM `tasks` WHERE `tasks`.`project` = $project_id");
+
+      ?>
+      <progress class="uk-progress" value="<?php echo $completed_tasks->num_rows; ?>" max="<?php echo $tasks->num_rows; ?>"></progress>
+      <p><?php echo $completed_tasks->num_rows; ?> of <?php echo $tasks->num_rows; ?> tasks completed</p>
+    </div>
+  </div>
+<?php endwhile; ?>
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 <?php require_once 'template-parts/footer.php'; ?>

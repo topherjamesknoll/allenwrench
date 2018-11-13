@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ' . ABSPATH . '/install.php'); endif; ?>
 <?php user_redirect(); ?>
 
 <?php
@@ -7,10 +7,7 @@ if (isset($_GET['teamid'])) {
 
   $team_id = $_GET['teamid'];
 
-  connect();
-  $sql = "DELETE FROM `teams` WHERE `teams`.`id` = '$team_id'";
-  mysqli_query($connection, $sql);
-  mysqli_close($connection);
+  $mysqli->query("DELETE FROM `teams` WHERE `teams`.`id` = '$team_id'");
 
   header('Location: ' . ABSPATH . '/index.php');
 

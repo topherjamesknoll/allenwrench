@@ -1,20 +1,103 @@
+/*
+          _ _             __          __                  _
+    /\   | | |            \ \        / /                 | |
+   /  \  | | | ___ _ __    \ \  /\  / / __ ___ _ __   ___| |__
+  / /\ \ | | |/ _ \ '_ \    \ \/  \/ / '__/ _ \ '_ \ / __| '_ \
+ / ____ \| | |  __/ | | |    \  /\  /| | |  __/ | | | (__| | | |
+/_/    \_\_|_|\___|_| |_|     \/  \/ |_|  \___|_| |_|\___|_| |_|
+
+*/
+
 @import url('uikit.min.css');
 @import url('fontawesome.min.css');
+@import url('pikaday.css');
+
+body {
+  background: #F8F8F8;
+  margin-top: -80px;
+}
+table, th, td {
+    border: 1px solid #E5E5E5;
+    margin-top: 20px;
+}
 
 /* Custom */
 
 .title {
   color: #FFFFFF;
 }
+.speech-bubble {
+  border-radius: 25px 25px 25px 0;
+}
 
 /* UI Kit */
 
-.uk-container {
-  padding-top: 80px;
+em {
+  color: inherit;
+}
+.uk-section {
+  margin-top: 80px;
+}
+.uk-section-secondary { /* Sidebar */
+  background: #213359;
+}
+.uk-offcanvas-bar {
+  background: #FFFFFF;
+  color: #666666;
+}
+.uk-progress::-webkit-progress-value {
+  background-color: #73D3F3;
+}
+.uk-progress::-moz-progress-bar {
+  background-color: #73D3F3;
+}
+.uk-progress::-ms-fill {
+  background-color: #73D3F3;
+}
+.uk-table {
+  background: #FFFFFF;
 }
 
-/* Navbar */
+/* Links */
 
+a,
+a:hover,
+a:focus,
+a:active {
+  color: #73D3F3;
+  text-decoration: none;
+}
+
+/* Top Nav */
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+  background: #73D3F3;
+}
 .uk-navbar-container {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+.uk-light .uk-logo,
+.uk-light .uk-navbar-toggle {
+  color: #FFFFFF;
+}
+
+/* Tabs */
+
+.uk-tab>.uk-active>a {
+  border-color: #73D3F3;
+}
+
+/* Buttons */
+
+.uk-button-primary,
+.uk-button-primary:hover,
+.uk-button-primary:focus,
+.uk-button-primary:active {
+  background: #FF8300;
+}
+
+/* JQuery Validation */
+.error {
+  color: #F0506E;
+  font-weight: bold;
 }

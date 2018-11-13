@@ -5,3 +5,15 @@
 [31-Oct-2018 20:07:28 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/login.php on line 1
 [31-Oct-2018 20:15:08 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/add.php on line 1
 [31-Oct-2018 22:09:24 CST6CDT] PHP Parse error:  syntax error, unexpected '=', expecting ',' or ')' in /home/cultureh/public_html/kinwebdesign/allenwrench/auth/edit.php on line 39
+[07-Nov-2018 01:04:32 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/login.php on line 1
+[07-Nov-2018 23:44:54 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli::fetch_assoc() in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/login.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/login.php on line 10
+[08-Nov-2018 01:34:07 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli::fetch_assoc() in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/edit.php:26
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/edit.php on line 26
+[08-Nov-2018 01:41:59 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/login.php on line 1
+[08-Nov-2018 11:34:59 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'template-parts/header.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/add.php on line 39
+[08-Nov-2018 11:36:06 CST6CDT] PHP Parse error:  syntax error, unexpected end of file in /home/cultureh/public_html/getallenwrench/development/allenwrench/auth/add.php on line 92

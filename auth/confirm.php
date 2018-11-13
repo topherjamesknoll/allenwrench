@@ -1,4 +1,4 @@
-<?php require_once '../config.php'; ?>
+<?php if (file_exists('../config.php')) : require_once '../config.php'; else : header('Location: ../install.php'); endif; ?>
 
 <?php
 
@@ -9,25 +9,21 @@
 
 	// Check database
 
-	connect();
-	$sql = "SELECT * FROM `members` WHERE `members`.`email` = '$email' and `members`.`confirmation` = '$confirmation'";
-	$result = mysqli_query($connection, $sql);
-  $rows = mysqli_num_rows($result);
+	$members = $mysqli->query("SELECT * FROM `members` WHERE `members`.`email` = '$email' and `members`.`confirmation` = '$confirmation'");
+	$rows = $members->num_rows;
 
   // Activate
 
   if ($rows==1) {
-    $sql = "UPDATE `members` SET `active` = '1' WHERE `members`.`email` = '$email'";
-    mysqli_query($connection, $sql);
-  }
 
-  mysqli_close($connection);
+		$mysqli->query("UPDATE `members` SET `active` = '1' WHERE `members`.`email` = '$email'");
+  }
 
   // Login
 
-  $row = mysqli_fetch_assoc($result);
+  $member = $mysqli->fetch_assoc($members);
   session_start();
-  $_SESSION['user'] = $row['id'];
+  $_SESSION['user'] = $row['member'];
 
 	// Redirect
 

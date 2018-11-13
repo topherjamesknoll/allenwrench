@@ -5,18 +5,10 @@ $("#installnextbutton").click(function(){
   $("#installcardtwo").toggleClass('uk-hidden uk-visible');
 });
 
-// Submit comment form
+// Select months
 
-$( "#commentformsubmit" ).click(function() {
-  $('form#commentform').submit();
-});
-
-
-// Check for emtpy fields
-
-$(document).ready(function(){
-  $('.submit').prop('disabled',true);
-  $('#required').keyup(function(){
-      $('.submit').prop('disabled', this.value == "" ? true : false);
-  })
+$(function() {
+    $('#months').change(function() {
+        this.form.submit();
+    });
 });

@@ -1,4 +1,0 @@
-[30-Oct-2018 13:38:46 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 3
-[30-Oct-2018 13:38:56 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'template-parts/header.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 27
-[30-Oct-2018 19:45:37 CST6CDT] PHP Parse error:  syntax error, unexpected 'endif' (T_ENDIF) in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 57
-[30-Oct-2018 20:01:39 CST6CDT] PHP Parse error:  syntax error, unexpected '$_POST' (T_VARIABLE), expecting '(' in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 22

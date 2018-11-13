@@ -5,3 +5,29 @@
 [29-Oct-2018 20:04:52 CST6CDT] PHP Parse error:  syntax error, unexpected '{' in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/edit.php on line 5
 [29-Oct-2018 20:05:02 CST6CDT] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/edit.php on line 27
 [30-Oct-2018 18:14:38 CST6CDT] PHP Fatal error:  require_once(): Failed opening required '../config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/teams/index.php on line 1
+[03-Nov-2018 00:19:55 CST6CDT] PHP Parse error:  syntax error, unexpected '?', expecting end of file in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 43
+[05-Nov-2018 17:21:46 CST6CDT] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE), expecting end of file in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 34
+[05-Nov-2018 17:23:33 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_num_rows() in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php:36
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 36
+[05-Nov-2018 17:39:25 CST6CDT] PHP Parse error:  syntax error, unexpected '<' in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 61
+[05-Nov-2018 22:29:15 CST6CDT] PHP Parse error:  syntax error, unexpected '{' in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 14
+[06-Nov-2018 22:53:00 CST6CDT] PHP Parse error:  syntax error, unexpected '$results' (T_VARIABLE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 33
+[06-Nov-2018 22:53:45 CST6CDT] PHP Parse error:  syntax error, unexpected '$results' (T_VARIABLE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 37
+[06-Nov-2018 23:01:12 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function checkmark() in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php:65
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 65
+[06-Nov-2018 23:09:42 CST6CDT] PHP Parse error:  syntax error, unexpected '$members' (T_VARIABLE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 71
+[06-Nov-2018 23:09:51 CST6CDT] PHP Parse error:  syntax error, unexpected '$members' (T_VARIABLE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 71
+[08-Nov-2018 00:30:54 CST6CDT] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php:66
+Stack trace:
+#0 /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php(77): checkmark('1')
+#1 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/edit.php on line 66
+[09-Nov-2018 21:51:11 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'template-parts/header.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/index.php on line 12
+[09-Nov-2018 21:56:13 CST6CDT] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/index.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/teams/index.php on line 17

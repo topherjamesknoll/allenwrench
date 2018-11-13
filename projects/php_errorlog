@@ -1,1 +1,29 @@
 [31-Oct-2018 00:12:34 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/projects/index.php on line 3
+[07-Nov-2018 23:24:51 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function connect() in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php on line 12
+[07-Nov-2018 23:59:54 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function connect() in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php on line 12
+[08-Nov-2018 00:11:37 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function connect() in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php on line 11
+[08-Nov-2018 00:16:56 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function connect() in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php on line 11
+[08-Nov-2018 00:17:20 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function connect() in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php on line 11
+[08-Nov-2018 00:17:30 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::mysqli_fetch_assoc() in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/edit.php on line 12
+[08-Nov-2018 11:55:45 CST6CDT] PHP Parse error:  syntax error, unexpected 'endif' (T_ENDIF) in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php on line 53
+[08-Nov-2018 13:59:42 CST6CDT] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php on line 1
+[08-Nov-2018 14:00:09 CST6CDT] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php on line 1
+[08-Nov-2018 14:00:41 CST6CDT] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/cultureh/public_html/getallenwrench/development/allenwrench/projects/index.php on line 1

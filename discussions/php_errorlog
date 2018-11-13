@@ -1,0 +1,13 @@
+[30-Oct-2018 13:38:46 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'config.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 3
+[30-Oct-2018 13:38:56 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'template-parts/header.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 27
+[30-Oct-2018 19:45:37 CST6CDT] PHP Parse error:  syntax error, unexpected 'endif' (T_ENDIF) in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 57
+[30-Oct-2018 20:01:39 CST6CDT] PHP Parse error:  syntax error, unexpected '$_POST' (T_VARIABLE), expecting '(' in /home/cultureh/public_html/kinwebdesign/allenwrench/comments/index.php on line 22
+[03-Nov-2018 23:35:29 CST6CDT] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/cultureh/public_html/getallenwrench/development/allenwrench/functions.php on line 44
+[05-Nov-2018 14:46:55 CST6CDT] PHP Parse error:  syntax error, unexpected 'endwhile' (T_ENDWHILE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/comments/index.php on line 48
+[05-Nov-2018 14:47:11 CST6CDT] PHP Parse error:  syntax error, unexpected 'endwhile' (T_ENDWHILE) in /home/cultureh/public_html/getallenwrench/development/allenwrench/comments/index.php on line 48
+[05-Nov-2018 14:59:54 CST6CDT] PHP Parse error:  syntax error, unexpected '.' in /home/cultureh/public_html/getallenwrench/development/allenwrench/comments/index.php on line 53
+[08-Nov-2018 02:40:10 CST6CDT] PHP Fatal error:  require_once(): Failed opening required 'template-parts/header.php' (include_path='.:/usr/local/php70/pear') in /home/cultureh/public_html/getallenwrench/development/allenwrench/comments/index.php on line 60
+[08-Nov-2018 13:44:25 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli::quuery() in /home/cultureh/public_html/getallenwrench/development/allenwrench/comments/index.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/cultureh/public_html/getallenwrench/development/allenwrench/comments/index.php on line 35
